@@ -17,7 +17,7 @@ it will output a line like `home-html.5c3fgf6ba3bf5ap999c.chunk.js` you want to 
 
 e.g. in your volumes you would put something like this but obviously change the random string to match yours you just found
 
-- ./custom-html-chunk.js:/jellyfin/jellyfin-web/home-html.5c3fgf6ba3bf5ap999c.chunk.js
+`- ./custom-html-chunk.js:/jellyfin/jellyfin-web/home-html.5c3fgf6ba3bf5ap999c.chunk.js`
 
 you will need to bring the docker container up again with the mapping changes.
 
