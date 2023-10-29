@@ -44,27 +44,29 @@ h1, h2, h3, p {
         }
         .backdrop {
             position: absolute;
-            top: 0;
+            top: 50%; /*adjust this for vertical position*/
             left: 0;
             width: 100%;
-            height: 100%;
+            height: auto;
+            transform: translateY(-45%); /*vertical position*/
             object-fit: cover; /* Maintain aspect ratio (typically 16:9) */
         }
         .logo {
             position: absolute;
             bottom: 10px;
-            right: 10px;
+            left: 10px;
             max-height: 50%;
+            max-width: 30%;
             width: auto;
         }
         .featured-content {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            top: 0;
+            right: 0;
             background: rgba(0, 0, 0, 0.5);
             padding: 10px;
             color: white;
-            font-size: 35px;
+            font-size: 25px;
         }
         .timer {
             position: absolute;
