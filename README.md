@@ -1,6 +1,8 @@
 # jellyfin-featured
 FEATURED BAR OMG in the top of the jellyfin media server
 
+https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/2f0de0eb-1292-4685-9c59-34aa0d9bf5fb
+
 You need to link you home-html chunk js file in docker to a custom file on your server if using docker
 
 first find your file name (every file name is different because the random string generated on install)
@@ -41,14 +43,7 @@ it will make the new file "slideshow.html" copy that into your avatars dir you m
 
 all done
 
-
-
-
-
-
-
-
-if you are using windows, you have to put it in your C:\Program Files\Jellyfin\Server\jellyfin-web\avatars\ directory
+if you are using windows, you have to put it in your C:\Program Files\Jellyfin\Server\jellyfin-web\avatars\ directory and modify the home-html.chunk in the C:\Program Files\Jellyfin\Server\jellyfin-web\ directory directly
 
 
 
