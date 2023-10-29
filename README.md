@@ -4,6 +4,10 @@ NOTE: this works for the webui only at its current form, there is another way to
 
 [2023-10-29 12-00-53-1.webm](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/b41b28e3-5cf4-4c3a-a702-8eab59e10358)
 
+![Screenshot 2023-10-29 at 22-05-39 Jellyfin](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/6589502e-b85c-4d53-9c9e-881072401c35)
+
+![Screenshot 2023-10-29 at 22-04-33 Jellyfin](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/94c112a9-4da5-4667-8f82-a304b03c0365)
+
 
 ## Installation
 
