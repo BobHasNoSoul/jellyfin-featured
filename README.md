@@ -1,7 +1,7 @@
 # jellyfin-featured
 FEATURED BAR OMG in the top of the jellyfin media server
 
-https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/2f0de0eb-1292-4685-9c59-34aa0d9bf5fb
+[2023-10-29 12-00-53-1.webm](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/b41b28e3-5cf4-4c3a-a702-8eab59e10358)
 
 You need to link you home-html chunk js file in docker to a custom file on your server if using docker
 
