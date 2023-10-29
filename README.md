@@ -3,6 +3,9 @@ FEATURED BAR OMG in the top of the jellyfin media server
 
 [2023-10-29 12-00-53-1.webm](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/b41b28e3-5cf4-4c3a-a702-8eab59e10358)
 
+
+## Installation
+
 You need to link you home-html chunk js file in docker to a custom file on your server if using docker
 
 first find your file name (every file name is different because the random string generated on install)
@@ -45,8 +48,6 @@ all done
 
 if you are using windows, you have to put it in your C:\Program Files\Jellyfin\Server\jellyfin-web\avatars\ directory and modify the home-html.chunk in the C:\Program Files\Jellyfin\Server\jellyfin-web\ directory directly
 
-
-
-
+if you are using bare metal install of jellyfin on linux i will assume you already know where the server files for jellyfin-web are installed if not they will be in the log when you first start the server.
 
 if your users cannot see it they need to clear their browser data /cache (opera sucks for this)
