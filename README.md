@@ -25,7 +25,7 @@ you will need to bring the docker container up again with the mapping changes.
 this will be edited to iject the iframe as needed for the featured bar In that file you need to insert the following code directly after  `data-backdroptype="movie,series,book">` 
 
 the code to insert is 
-`<style> .featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto; padding-left: 4vw;} </style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe> `
+`<style> .featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto;} </style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe> `
 
 save the file
 
