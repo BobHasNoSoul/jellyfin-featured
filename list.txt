@@ -1,0 +1,10 @@
+https://example.com/web/index.html#!/details?id=48926b1c7d430d0a439907e33a418d37
+https://example.com/web/index.html#!/details?id=c2c11963ac6771c1547340fdd40b2f5e
+https://example.com/web/index.html#!/details?id=423aa68d161105ecde863bc485dea839
+https://example.com/web/index.html#!/details?id=64c7de79ce32b4045590e1d5156be729&context=tvshows
+https://example.com/web/index.html#!/details?id=c2bad6a12281c4047e4f11c29aa18bec
+https://example.com/web/index.html#!/details?id=08fbbae4577385bd86b3513af7c30c8a
+https://example.com/web/index.html#!/details?id=beb2eaafafc9fca4b9c95db4b511732c
+https://example.com/web/index.html#!/details?id=b13e9925eb6a577b9da4bbc38d7521b5
+https://example.com/web/index.html#!/details?id=3a85aad6d324c8a4abb15395170b0fad&context=tvshows
+https://example.com/web/index.html#!/details?id=b6915af6864a6f7b213b8378c2e932b5
