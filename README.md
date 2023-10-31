@@ -32,7 +32,7 @@ you will need to bring the docker container up again with the mapping changes.
 this will be edited to iject the iframe as needed for the featured bar In that file you need to insert the following code directly after  `data-backdroptype="movie,series,book">` 
 
 the code to insert is 
-`<style> .featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto;} </style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe> `
+`<style> .featurediframe { width: 89vw; height: 300px; display: block; margin: 0 auto;} </style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe> `
 
 save the file
 
@@ -42,13 +42,13 @@ then you need a new mapping create a folder called avatars and map that to /usr/
 
 now create a slideshow with your links REMOVE SERVER ID FROM THE URLS or it can bug out
 
-modify the CREATE.sh file at the top there are a few things to change like HEADER WEBSITE and the links of the content you want to uset modify them to be your own items
+modify the CREATE.sh file at the top there are a few things to change like HEADER near the top now you can save the script (the header is the text you want to display on the banner)
 
-now you can save the script with your links in it and header and url changed
+now we create a list.txt next to the CREATE.sh file it should contain your links you want to use in the banner so replace example .com linkes with your own link minus the serverid (if in doubt edit the example list.txt and you will see the things that work)
 
-sudo chmod +x CREATE.sh
+`sudo chmod +x CREATE.sh`
 
-now just run ./CREATE.sh
+now just run `sudo ./CREATE.sh`
 
 it will make the new file "slideshow.html" copy that into your avatars dir you made and mapped a second ago and bring up the docker container again with the new mapping for the avatars folder.
 
