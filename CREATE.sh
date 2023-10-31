@@ -1,19 +1,9 @@
 #!/bin/bash
-#change the header for whatever you want for now it is set to featured content and is the text at the bottom left of the bar
 HEADER="Featured Content"
-#replace with your website including http:// or https://
-WEBSITE="https://www.example.com"
-#edit to have a list of your links WITHOUT serverid
-main_links=(
-    "https://www.example.com/web/index.html#!/details?id=423aa68d161105ecde863bc485dea839"
-    "https://www.example.com/web/index.html#!/details?id=64c7de79ce32b4045590e1d5156be729&context=tvshows"
-    "https://www.example.com/web/index.html#!/details?id=c2bad6a12281c4047e4f11c29aa18bec"
-    "https://www.example.com/web/index.html#!/details?id=08fbbae4577385bd86b3513af7c30c8a"
-    "https://www.example.com/web/index.html#!/details?id=beb2eaafafc9fca4b9c95db4b511732c"
-    "https://www.example.com/web/index.html#!/details?id=b13e9925eb6a577b9da4bbc38d7521b5"
-    "https://www.example.com/web/index.html#!/details?id=3a85aad6d324c8a4abb15395170b0fad&context=tvshows"
-    "https://www.example.com/web/index.html#!/details?id=b6915af6864a6f7b213b8378c2e932b5"
-)
+main_links=()
+while IFS= read -r line; do
+    main_links+=("$line")
+done < list.txt
 # Create the HTML file
 cat <<EOL > slideshow.html
 <!DOCTYPE html>
@@ -21,14 +11,30 @@ cat <<EOL > slideshow.html
 <head>
     <title>Slideshow</title>
     <style>
-/* Include the Google Fonts stylesheet for the Noto Sans font to match jellyfins font*/
+/* Include the Google Fonts stylesheet for the Noto Sans font */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+/* Apply the font to the body or specific elements */
 body {
   font-family: 'Noto Sans', sans-serif;
 }
+
+/* You can customize other text styles as needed */
 h1, h2, h3, p {
   font-family: 'Noto Sans', sans-serif;
   /* Additional styling properties can be added here */
+}
+
+/* Example: Change the font size and color */
+p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Example: Change the font size and color for headers */
+h1 {
+  font-size: 36px;
+  color: #FF5733;
 }
 
         body {
@@ -42,32 +48,32 @@ h1, h2, h3, p {
             height: 100vh;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        .backdrop {
-            position: absolute;
-            top: 50%; /*adjust this for vertical position*/
-            left: 0;
-            width: 100%;
-            height: auto;
-            transform: translateY(-45%); /*vertical position*/
-            object-fit: cover; /* Maintain aspect ratio (typically 16:9) */
-        }
+.backdrop {
+    position: absolute;
+    top: 50%; /* Adjust this value to position the backdrop vertically */
+    left: 0;
+    width: 100%;
+    height: auto;
+    transform: translateY(-45%); /* Vertically center the backdrop */
+    object-fit: cover; /* Maintain aspect ratio (typically 16:9) */
+}
         .logo {
             position: absolute;
             bottom: 10px;
             left: 10px;
             max-height: 50%;
-            max-width: 30%;
+            max-width:30%;
             width: auto;
         }
-        .featured-content {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            color: white;
-            font-size: 25px;
-        }
+.featured-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+/*    color: white;*/
+    font-size: 25px;
+}
         .timer {
             position: absolute;
             display: none;
@@ -84,12 +90,18 @@ h1, h2, h3, p {
 </head>
 <body>
 EOL
+
+# Iterate through the main links and create slides
 for main_link in "${main_links[@]}"; do
+    # Extract the item ID from the main link using a regular expression
     item_id=$(echo "$main_link" | grep -oP '(?<=id=)[^&]+')
-    backdrop_url="$WEBSITE/Items/$item_id/Images/Backdrop/0"
-    logo_url="$WEBSITE/Items/$item_id/Images/Logo"
+
+    # Generate the backdrop and logo URLs
+    backdrop_url="/Items/$item_id/Images/Backdrop/0"
+    logo_url="/Items/$item_id/Images/Logo"
+
     cat <<EOL >> slideshow.html
-    <a href="$main_link" class="slide" target="_blank" rel="noreferrer">
+    <a href="/#!/details?id=$item_id")' class="slide" target="_top" rel="noreferrer">
         <img class="backdrop" src="$backdrop_url" alt="Backdrop">
         <img class="logo" src="$logo_url" alt="Logo">
         <div class="featured-content">$HEADER</div>
@@ -97,8 +109,15 @@ for main_link in "${main_links[@]}"; do
     </a>
 EOL
 done
+
+# Close the HTML file and add JavaScript for automatic slideshow
 cat <<EOL >> slideshow.html
 <script>
+    function reloadParent(url) {
+        // Change the parent window's location to the specified URL
+        top.location.href = url;
+    }
+
     var slides = document.querySelectorAll(".slide");
     var currentSlide = 0;
 
@@ -136,4 +155,6 @@ cat <<EOL >> slideshow.html
 </body>
 </html>
 EOL
-echo "HTML file created: slideshow.html"
+
+# Display a message indicating the HTML file has been created
+echo "Slideshow HTML file created: slideshow.html"
