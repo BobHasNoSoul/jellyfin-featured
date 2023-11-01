@@ -1,7 +1,5 @@
 # jellyfin-featured
 
-NOTE: this works for the webui only at its current form, there is another way to do this that works with re-writing chunk.js files themselves but for now this works well on webui (so any browser based experiance)
-
 what does this do? 
 well it makes a featured banner that changes every 10 seconds to the next item defined by the admin, it takes a single link per item, text title and your website url and does the rest for you.
 
