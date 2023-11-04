@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 # Replace with your Jellyfin server's base URL
 base_url = "http://192.168.1.14:8096"
