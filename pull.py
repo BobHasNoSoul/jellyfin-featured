@@ -3,7 +3,7 @@ import json
 import os
 
 # Replace with your Jellyfin server's base URL
-base_url = "http://192.168.1.14:8096"
+base_url = "http://127.0.0.1:8096"
 # Replace with the user's ID
 user_id = "USER-ID-GOES-HERE"
 # Replace with your Jellyfin API key
