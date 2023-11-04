@@ -1,4 +1,13 @@
 import random
+import os 
+
+# Define the filenames
+shuffle_file = "shuffle.txt"
+
+# Check if shuffle.txt exists and delete it if it does
+if os.path.exists(shuffle_file):
+    os.remove(shuffle_file)
+    print(f"{shuffle_file} deleted")
 
 # Read the lines from userfavorites.txt
 with open("userfavorites.txt", "r") as file:
