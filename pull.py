@@ -8,6 +8,14 @@ user_id = "USER-ID-GOES-HERE"
 # Replace with your Jellyfin API key
 api_key = "YOUR-API-KEY-GOES-HERE"
 
+# Define the filenames
+favorites_file = "userfavorites.txt"
+
+# Check if userfavorites.txt exists and delete it if it does
+if os.path.exists(favorites_file):
+    os.remove(favorites_file)
+    print(f"{favorites_file} deleted")
+
 # Create headers with the API key
 headers = {
     "X-Emby-Token": api_key
