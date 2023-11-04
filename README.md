@@ -60,7 +60,11 @@ You need to link you home-html chunk js file in docker to a custom file on your 
 first find your file name (every file name is different because the random string generated on install)
 run the following commands (this assumes official docker image on linux)
 
-'sudo docker exec -it jellyfin /bin/bash' then 'cd /jellyfin/jellyfin-web/' then `ls | grep home-html`
+`sudo docker exec -it jellyfin /bin/bash`
+then 
+`cd /jellyfin/jellyfin-web/`
+then 
+`ls | grep home-html`
 
 it will output a line like `home-html.5c3fgf6ba3bf5ap999c.chunk.js` you want to use that in the next part because your random string should be different
 
