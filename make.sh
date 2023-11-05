@@ -68,6 +68,7 @@ if [ "$RUN_PRE_SCRIPT" = true ]; then
     fi
     run_pre_script
 fi
+
 main_item_ids=()  # Initialize an array for item IDs
 
 while IFS= read -r item_id; do
@@ -82,7 +83,7 @@ cat <<EOL > slideshow.html
     <title>Slideshow</title>
     <style>
         /* Include the Google Fonts stylesheet for the Noto Sans font */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
 /* Apply the font to the body or specific elements */
 body {
@@ -187,69 +188,28 @@ for item_id in "${main_item_ids[@]}"; do
 EOL
 done
 
-# Close the HTML file and add JavaScript for automatic slideshow
+# Add the JavaScript for randomizing the order of slides
 cat <<EOL >> slideshow.html
-    <script>
-        // Function to shuffle an array
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+<script>
+    // Function to shuffle an array
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
 
-        var slides = document.querySelectorAll(".slide");
-        var shuffledIndexes = Array.from({ length: slides.length }, (_, i) => i);
-
-        // Shuffle the indexes
-        shuffleArray(shuffledIndexes);
-
-        var currentSlide = 0;
-
-        function showSlide(index) {
-            for (var i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            slides[shuffledIndexes[index]].style.display = "block";
-            countdown = 10; // Reset countdown for each slide
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
-
-        showSlide(currentSlide);
-
-        // Initial call for the first slide
-        var countdown = 10;
-        var timer = document.querySelector(".timer");
-        timer.innerHTML = countdown;
-
-        function updateTimer() {
-            countdown--;
-            timer.innerHTML = countdown;
-            if (countdown <= 0) {
-                nextSlide();
-            }
-        }
-
-        // Timer for slide transition
-        setInterval(updateTimer, 1000);
-
-    function reloadParent(url) {
-        // Change the parent window's location to the specified URL
-        top.location.href = url;
+        return array;
     }
 
     var slides = document.querySelectorAll(".slide");
     var currentSlide = 0;
+    var shuffledIndexes = shuffleArray(Array.from({ length: slides.length }, (_, i) => i));
 
     function showSlide(index) {
         for (var i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
-        slides[index].style.display = "block";
+        slides[shuffledIndexes[index]].style.display = "block";
         countdown = 10; // Reset countdown for each slide
     }
 
