@@ -1,7 +1,7 @@
 # jellyfin-featured
 
 what does this do? 
-well it makes a featured banner that changes every 10 seconds to the next item defined by the admin, it takes a single link per item, text title and your website url and does the rest for you.
+well it makes a featured banner that changes every 10 seconds to the next item defined by the admin, it takes a single link per item, text title and your website url and does the rest for you. when a user clicks the item it will open and just take them to the item that is on that banner at that time. this works on the clients and pc but has one issue at the moment with the tv clients that stops the banner being clicked on because the <button> doesnt know what to do when it is inside an iframe.. if you know how to fix this send a pull request :)
 
 ![Screenshot 2023-11-08 171638](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/c0765ae0-1eaa-4126-8963-792697d13a68)
 ![Screenshot 2023-11-08 171524](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/c8865f2b-1a91-4c38-ad49-ce3e768395bb)
