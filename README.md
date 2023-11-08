@@ -3,12 +3,9 @@
 what does this do? 
 well it makes a featured banner that changes every 10 seconds to the next item defined by the admin, it takes a single link per item, text title and your website url and does the rest for you.
 
-[2023-10-29 12-00-53-1.webm](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/b41b28e3-5cf4-4c3a-a702-8eab59e10358)
-
-![Screenshot 2023-10-29 at 22-05-39 Jellyfin](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/6589502e-b85c-4d53-9c9e-881072401c35)
-
-![Screenshot 2023-10-29 at 22-04-33 Jellyfin](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/94c112a9-4da5-4667-8f82-a304b03c0365)
-
+![Screenshot 2023-11-08 171638](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/c0765ae0-1eaa-4126-8963-792697d13a68)
+![Screenshot 2023-11-08 171524](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/c8865f2b-1a91-4c38-ad49-ce3e768395bb)
+![Screenshot 2023-11-08 171453](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/d44b5c3c-7c2f-469f-a1ba-bc433f27633d)
 
 ## REQUIREMENTS
 - a jellyfin install
@@ -19,6 +16,7 @@ well it makes a featured banner that changes every 10 seconds to the next item d
 
 API integration to also pull the details for the items that are in the lists.. for this you need to modify make.sh with your userid and an api key for jellyfin like we did with pull.py but in make.sh, everything else stays the same but it has a sleeker look.
 
+the old version without the update to descriptions etc can still be used at makeold.sh
 API integration to pull a specific user favorites, you can use that by editing the pull.py and adding your own userid (its in the address bar when you edit that user userid=STRINGYOUNEEDHERE so you would only copy the part that is after the = sign) then you put your api key in there from jellyfin (generate a new one if needed) you then simply need to make sure your base_url is correct so specify the correct ip and port or use a domain name etc then save it 
 
 to update it to your favorites you need to run this command after you have completed the above steps of editing the one file with the needed keys and ids `sudo ./make.sh -p -h "Featured Content" -l ./userfavorites.txt` if you wish the userfavorites to be shuffled so they are not in alphabetical order just run this command `sudo ./make.sh -p -m -h "Featured Content" -l ./shuffle.txt`
@@ -28,6 +26,8 @@ you can still make manual lists like i have by editing the files in lists direct
 
 
 ## Crontab example
+To use crontabs sucessfully you should edit the bottom line of the make.sh script to point to where you have your mounted avatars folder for slideshow.html to be injected properly.
+
 ``` 
 # christmas featured list (1st december)
 0 1 1 12 * /path/to/jellyfin-featured/make.sh -h "Christmas Season" -l /path/to/jellyfin-featured/lists/christmas.txt
