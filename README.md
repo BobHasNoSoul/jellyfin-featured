@@ -10,8 +10,14 @@ well it makes a featured banner that changes every 10 seconds to the next item d
 ![Screenshot 2023-10-29 at 22-04-33 Jellyfin](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/94c112a9-4da5-4667-8f82-a304b03c0365)
 
 
+## REQUIREMENTS
+- a jellyfin install
+- jq installed on the system for the descriptions to load `sudo apt install jq`
+- the ability to read this guide. (maybe also grab my avatars pack that will be updated soon too)
 
 ## okay so there have been a number of updates
+
+API integration to also pull the details for the items that are in the lists.. for this you need to modify make.sh with your userid and an api key for jellyfin like we did with pull.py but in make.sh, everything else stays the same but it has a sleeker look.
 
 API integration to pull a specific user favorites, you can use that by editing the pull.py and adding your own userid (its in the address bar when you edit that user userid=STRINGYOUNEEDHERE so you would only copy the part that is after the = sign) then you put your api key in there from jellyfin (generate a new one if needed) you then simply need to make sure your base_url is correct so specify the correct ip and port or use a domain name etc then save it 
 
