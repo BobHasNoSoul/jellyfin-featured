@@ -235,8 +235,8 @@ for item_id in "${main_item_ids[@]}"; do
     cat <<EOL >> slideshow.html
     <a href="/#!/details?id=$item_id" class="slide" target="_top" rel="noreferrer">
         <div class="grad"></div>
-        <img class="backdrop" src="$backdrop_url" alt="Backdrop">
-        <img class="logo" src="$logo_url" alt="Logo">
+        <img class="backdrop" src="$backdrop_url" alt="Backdrop" loading="lazy">
+        <img class="logo" src="$logo_url" alt="Logo" loading="lazy">
         <div class="featured-content">$HEADER</div>
         <div class="item-description">$description</div>
         <div class="timer"></div>
