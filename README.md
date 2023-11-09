@@ -55,11 +55,50 @@ To use crontabs sucessfully you should edit the bottom line of the make.sh scrip
 
 ## Installation
 
+ - Windows Install
+
+1. download the files from this repo using the zip or gitclone, you pick.
+2. install ubuntu from the windows store and use windows subsystem linux for the shell script (you could use cygwin but at this point there isnt a real reason to).
+3. open `C:\Program Files\Jellyfin\Server\jellyfin-web\` and create a new folder called `avatars` this will be where the slideshow.html will be living.
+4. open ubuntu for windows via the start menu and enter the following commands
+
+```
+`sudo apt install jq python3`
+'cd "/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/"`
+`ls | grep home-html`
+```
+copy the output line that is like this but the uuid changed home-html.5c3fff1ba3bf5ae955e7.chunk.js you will need to modify that file with the following.
+
+find this part 
+
+`data-backdroptype="movie,series,book">` and insert the following directly after the `>`
+
+`<style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto}</style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe>`
+
+okay now we have injected the iframe we are %80 of the way there.
+
+5. get the following info api key for jellyfin (settings page of jellyfin look for api and make a new one), your website url (or your ip and port), a user uuid (get this from the profile page and the url will look like this `http://192.168.1.76:8096/web/index.html#!/useredit.html?userId=8cc7e498c8e84dae945321f091ad675f` the uuid for that user is the end part `8cc7e498c8e84dae945321f091ad675f` 
+
+6. edit pull.py and add your API key from jellyfin and user uuid in there and save
+
+7. edit make.sh and add your API key from jellyfin, user uuid and webite url on line 18 onwards (there are only three options to edit there)
+
+7b. optional edit the bottom to point to your avatars folder and replace itself on each run making it semi automatic so you can run it as a crontab.
+example for most installs will be the following `sudo cp slideshow.html /mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/slideshow.html`
+
+8. save the file and run it in the ubuntu window via `./make.sh -p -l userfavorites.txt -h "TEXT FOR TITLE HERE"`
+
+9. done get your clients to reload their cache and it will be there if you dont have any favorites before running step 8 it will give you a white box, add some favorites and pull them again with the command from step 8, also you could use the list.txt as outlined in the readme. (this is a hobby not my main job so its kinda a rush to throw all the info up here then head out to work).
+
+---
+
+if you are using docker you will need to change the directories it is using for your mapped directories, and then the steps are pretty much identical.
+
 *if you are using windows, you have to put it in your C:\Program Files\Jellyfin\Server\jellyfin-web\avatars\ directory and modify the home-html.chunk in the C:\Program Files\Jellyfin\Server\jellyfin-web\ directory directly*
 
 *if you are using bare metal install of jellyfin on linux i will assume you already know where the server files for jellyfin-web are installed if not they will be in the log when you first start the server.*
 
-*if your users cannot see it they need to clear their browser data/cache*
+*if your users cannot see it they need to clear their browser data/cache NOTE: description has been disabled for mobile users because of restrictions on screen space*
 
 You need to link you home-html chunk js file in docker to a custom file on your server if using docker
 
