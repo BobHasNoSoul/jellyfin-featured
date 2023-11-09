@@ -63,9 +63,9 @@ To use crontabs sucessfully you should edit the bottom line of the make.sh scrip
 4. open ubuntu for windows via the start menu and enter the following commands
 
 ```
-`sudo apt install jq python3`
-'cd "/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/"`
-`ls | grep home-html`
+sudo apt install jq python3
+cd "/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/"
+ls | grep home-html
 ```
 copy the output line that is like this but the uuid changed home-html.5c3fff1ba3bf5ae955e7.chunk.js you will need to modify that file with the following.
 
