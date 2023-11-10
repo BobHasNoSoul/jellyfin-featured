@@ -29,7 +29,7 @@ show_help() {
     echo "  -h, --header HEADER  Set the header text (default: Featured Content)"
     echo "  -l, --list FILE      Specify the input file containing item IDs (default: list.txt)"
     echo "  -p, --pre-script     Run a pre-script before launching the main script"
-    echo "  -m, --m-script       run the shuffle script the favorites order randomly (only with -p)"
+#    echo "  -m, --m-script       run the shuffle script the favorites order randomly (only with -p)"
     echo "  -help                Show this help message"
     echo "EXAMPLE:"
     echo "  $0 -p -m -h 'Custom Header' -l /path/to/list.txt"
@@ -37,10 +37,10 @@ show_help() {
 }
 
 # Function to run the m-script
-run_m_script() {
-    echo "Running m-script (shuffle.py)"
-    python3 ./shuffle.py
-}
+#run_m_script() {
+#    echo "Running m-script (shuffle.py)"
+#    python3 ./shuffle.py
+#}
 
 # Function to run a pre-script
 run_pre_script() {
@@ -62,9 +62,9 @@ while [[ "$#" -gt 0 ]]; do
         -p|--pre-script)
             RUN_PRE_SCRIPT=true
             ;;
-        -m|--m-script)
-            RUN_M_SCRIPT=true
-            ;;
+#        -m|--m-script)
+#            RUN_M_SCRIPT=true
+#            ;;
         -help)
             show_help
             ;;
@@ -78,9 +78,9 @@ done
 
 # Run the m-script if -p flag and -m flag are set
 if [ "$RUN_PRE_SCRIPT" = true ]; then
-    if [ "$RUN_M_SCRIPT" = true ]; then
-        run_m_script
-    fi
+#    if [ "$RUN_M_SCRIPT" = true ]; then
+#        run_m_script
+#    fi
     run_pre_script
 fi
 
@@ -125,10 +125,10 @@ p {
 .grad {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    right: 0;
+    width:  70%;
     height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)); /* Adjust gradient colors as needed */
+    background: linear-gradient(to right, rgb(16 16 16), rgba(0, 0, 0, 0)); /* Adjust gradient colors as needed */
     z-index: 1; /* Place the "grad" div just in front of the backdrop */
 }
 /* Example: Change the font size and color for headers */
@@ -151,14 +151,14 @@ h1 {
 .backdrop {
     position: absolute;
     top: 50%; /* Adjust this value to position the backdrop vertically */
-    left: 0;
-    width: 100%;
+    right: 0;
+    width: 70%;
     height: auto;
     transform: translateY(-45%); /* Vertically center the backdrop */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+    background: linear-gradient(to right, rgba(16, 16, 16, 1), rgba(0, 0, 0, 0));
 }
         .logo {
             position: absolute;
