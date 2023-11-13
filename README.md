@@ -131,6 +131,18 @@ then you need a new mapping create a folder called avatars and map that to /usr/
 
 `- ./avatars:/jellyfin/jellyfin-web/avatars`
 
+## Alternate Installation
+thanks to SethBacon at forum.jellyfin.org for this custom html that allows for 200 movies/shows etc to be pulled when there is an abscence of a list.txt written mainly in javascript creates a slightly different experiance 
+
+![phone](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/13c20204-2af4-4412-b485-004ff5201f24)
+![Capture2](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/6dbd403d-fe75-48b5-a4cf-6ed4d8b45cb3)
+
+simply edit alternate.html and change the "CHANGEME" sections for the userid and api key then save a copy of alternate.html as slideshow.html in your avatars dir 
+
+this will then pull on load a list of 200 random movies and tv shows it also gives a nice looking style to it to match the original jellyfin theming including header. 
+
+NOTE: THIS VERSION ISNT ABLE TO BE RAN VIA MAKE.SH YET SO CRONTAB EXAMPLE WILL NOT WORK FOR IT.. YET
+
 ## USAGE: 
 now create a slideshow with your links we need to create a list.txt with our itemids one per line you can get your ids from the url of the item you are wanting to link e.g. `https://example/web/index.html#!/details?id=32e64643a3a798aa85943d6b55c4a038&context=tvshows` becomes `32e64643a3a798aa85943d6b55c4a038`
 
