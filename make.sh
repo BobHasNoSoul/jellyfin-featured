@@ -97,6 +97,12 @@ cat <<EOL > slideshow.html
 <head>
     <title>Slideshow</title>
     <style>
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
+
 @media (max-width: 768px) {
     .item-description {
         display: none;
@@ -147,6 +153,7 @@ h1 {
             width: 100vw;
             height: 100vh;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: fadeInOut 10.5s infinite;
         }
 .backdrop {
     position: absolute;
