@@ -284,7 +284,7 @@ cat <<EOL >> slideshow.html
     showSlide(currentSlide);
 
     // Initial call for the first slide
-    var countdown = 10;
+    var countdown = 0;
     var timer = document.querySelector(".timer");
     timer.innerHTML = countdown;
 
