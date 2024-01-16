@@ -104,10 +104,21 @@ cat <<EOL > slideshow.html
 }
 
 @media (max-width: 768px) {
-    .item-description {
-        display: none;
-    }
+.item-description {
+    position: absolute;
+    bottom: 1px !important;
+    left: 1px !important;
+    color: white;
+    font-size: 14px !important;
+    max-width: 100vw !important;
+    padding: 2px !important;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0>
+    /* background: linear-gradient(to right, rgba(0, 0, 0>
+    border-radius: 5px!important;
+    z-index: 999999;
 }
+}
+
 
         /* Include the Google Fonts stylesheet for the Noto Sans font */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
