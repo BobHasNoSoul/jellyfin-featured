@@ -113,7 +113,7 @@ cat <<EOL > slideshow.html
     max-width: 100vw !important;
     padding: 2px !important;
     background: linear-gradient(to right, rgba(0, 0, 0, 0>
-    /* background: linear-gradient(to right, rgba(0, 0, 0>
+    /* background: linear-gradient(to right, rgba(0, 0, 0>*/
     border-radius: 5px!important;
     z-index: 999999;
 }
