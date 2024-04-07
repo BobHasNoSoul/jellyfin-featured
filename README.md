@@ -156,3 +156,31 @@ you can add the following line but edit it to fit your specific setup in make.sh
 `cp slideshow.html /path/to/mapped/slideshow.html`
 
 all done
+
+# If you experiance slow loading of the interface because of 200+ images on clients with slow internet connection you can fix that by editing the following
+
+in home-html you need to add this to the already inserted code from above all we are doing is adding the display none part to it. 
+
+`<iframe class="featurediframe" src="/web/avatars/slideshow.html" style="display:none;"></iframe>`
+
+you now need to edit index.html and insert the following code in the <body></body> tags (this makes it load after 8 seconds (my clients have semi slow intenet speeds to i tuned it to them.. however if they have dialup maybe increase this higher to reduce load at the same time)
+
+
+````
+<script>// page loads starts delay timer
+_delay = setInterval(delayCheck, 500)
+    // Function to load content after 8 seconds
+    function loadContentDelayed() {
+        setTimeout(function() {
+            // Replace 'featurediframe' with your CSS selector
+            var elements = document.querySelectorAll('.featurediframe');
+            elements.forEach(function(element) {
+                element.style.display = 'block';
+            });
+        }, 8000); // 8 seconds in milliseconds
+    }
+
+    // Call the function when the page finishes loading
+    window.onload = loadContentDelayed;
+</script>
+````
