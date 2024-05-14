@@ -196,5 +196,5 @@ if that displays correctly you need to simply refresh your cache for that modifi
 in firefox for example open YOURSERVERURL.COM/web/home-html.YOURUUIDHERE.chunk.js
 now press the following at the same time CTRL+shift+R it will reload and show you the changed file now it should work fine
 
-if your slideshow is not working check your api key and userid.. yes it is required.. you then want to get the list.txt configured correctly with the itemid only (i have had people message me about putting full links into the list but its not something i plan to implement but feel free to submit a pull request if you want to add that yourself)
+if your slideshow is not working check your make.sh for the correct api key and userid.. yes it is required.. you then want to get the list.txt configured correctly with the itemid only (i have had people message me about putting full links into the list but its not something i plan to implement but feel free to submit a pull request if you want to add that yourself)
 
