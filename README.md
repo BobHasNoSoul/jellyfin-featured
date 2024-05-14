@@ -60,7 +60,7 @@ To use crontabs sucessfully you should edit the bottom line of the make.sh scrip
 
 1. download the files from this repo using the zip or gitclone, you pick.
 2. install ubuntu from the windows store and use windows subsystem linux for the shell script (you could use cygwin but at this point there isnt a real reason to).
-3. open `C:\Program Files\Jellyfin\Server\jellyfin-web\` and create a new folder called `avatars` this will be where the slideshow.html will be living.
+3. open `C:\Program Files\Jellyfin\Server\jellyfin-web\` and create a new folder called `avatars` this will be where the slideshow.html featuredstyles.css and featuredscripts.js will be living.
 4. open ubuntu for windows via the start menu and enter the following commands
 
 ```
@@ -68,7 +68,7 @@ sudo apt install jq python3
 cd "/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/"
 ls | grep home-html
 ```
-copy the output line that is like this but the uuid changed home-html.5c3fff1ba3bf5ae955e7.chunk.js you will need to modify that file with the following.
+ copy the output line that is like this but the uuid changed home-html.YOURSWILLHAVENUMBERSHERE.chunk.js you will need to modify that file with the following.
 
 find this part 
 
@@ -85,7 +85,7 @@ okay now we have injected the iframe we are %80 of the way there.
 7. edit make.sh and add your API key from jellyfin, user uuid and webite url on line 18 onwards (there are only three options to edit there)
 
 7b. optional edit the bottom to point to your avatars folder and replace itself on each run making it semi automatic so you can run it as a crontab.
-example for most installs will be the following `sudo cp slideshow.html /mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/slideshow.html`
+example for most installs will be the following `sudo cp slideshow.html '/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/slideshow.html` `sudo cp featuredstyles.css /mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/featuredstyles.css` `sudo cp featuredscripts.js '/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/featuredscripts.js' `
 
 8. save the file and run it in the ubuntu window via `./make.sh -p -l userfavorites.txt -h "TEXT FOR TITLE HERE"`
 
@@ -184,3 +184,17 @@ _delay = setInterval(delayCheck, 500)
     window.onload = loadContentDelayed;
 </script>
 ````
+
+# troubleshooting
+
+my page wont load the featured bar
+
+firstly i want you to check you created the slideshow.html correctly go to your server /web/avatars/slideshow.html
+
+if that displays correctly you need to simply refresh your cache for that modified file so either clear your entire browsers cache since the dawn of time or reload that specific file 
+
+in firefox for example open YOURSERVERURL.COM/web/home-html.YOURUUIDHERE.chunk.js
+now press the following at the same time CTRL+shift+R it will reload and show you the changed file now it should work fine
+
+if your slideshow is not working check your api key and userid.. yes it is required.. you then want to get the list.txt configured correctly with the itemid only (i have had people message me about putting full links into the list but its not something i plan to implement but feel free to submit a pull request if you want to add that yourself)
+
