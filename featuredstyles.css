@@ -12,14 +12,14 @@
 }
 .featurediframe .backdrop {
   top: 50%;
-  height: 126vh !important;
+  height: 126vh;
   transform: translateY(-45%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background: linear-gradient(to right,#101010,rgba(0,0,0,0));
   background: linear-gradient(to right, rgb(0, 0, 0) 80%, rgba(0, 0, 0, 0) 100%) !important;
-  width: 70vw !important;
+  width: 70vw;
 }
 
 .featurediframe .logo {
@@ -29,5 +29,33 @@
   max-height: 50%;
   max-width: 30%;
   width: auto;
+  z-index: 4;
+}
+
+/*make the mobile great again*/
+@media only screen and (max-width: 767px) {
+.featurediframe {height: 18vh !important;}
+
+.item-description {
+  position: absolute;
+  bottom: 1px !important;
+  left: 1px !important;
+  font-size: 12px !important;
+  max-width: 100vw !important;
+  background: linear-gradient(to right,rgba(0,0,0,.8),rgba(0,0,0,0));
+  border-radius: 2px !important;
+  z-index: 3;
+}
+
+.featured-content {display: none !important;}
+
+.logo {
+  position: absolute;
+  top: 1px !important;
+  left: 1px !important;
+  max-height: 50%;
+  max-width: 74% !important;
+  width: auto;
   z-index: 4 !important;
+}
 }
