@@ -89,7 +89,9 @@ example for most installs will be the following `sudo cp slideshow.html '/mnt/c/
 
 8. save the file and run it in the ubuntu window via `./make.sh -p -l userfavorites.txt -h "TEXT FOR TITLE HERE"`
 
-9. done get your clients to reload their cache and it will be there if you dont have any favorites before running step 8 it will give you a white box, add some favorites and pull them again with the command from step 8, also you could use the list.txt as outlined in the readme. (this is a hobby not my main job so its kinda a rush to throw all the info up here then head out to work).
+9. now add this as a customcss inside the admin dashboard `@media only screen and (max-device-width: 767px) {.featurediframe {height: 16vh !important;}}` this fixes the display on mobile
+
+10. done get your clients to reload their cache and it will be there if you dont have any favorites before running step 8 it will give you a white box, add some favorites and pull them again with the command from step 8, also you could use the list.txt as outlined in the readme. (this is a hobby not my main job so its kinda a rush to throw all the info up here then head out to work).
 
 ---
 
