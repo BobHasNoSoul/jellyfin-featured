@@ -165,27 +165,10 @@ in home-html you need to add this to the already inserted code from above all we
 
 `<iframe class="featurediframe" src="/web/avatars/slideshow.html" style="display:none;"></iframe>`
 
-you now need to edit index.html and insert the following code in the <body></body> tags (this makes it load after 8 seconds (my clients have semi slow intenet speeds to i tuned it to them.. however if they have dialup maybe increase this higher to reduce load at the same time)
+you now need to edit same file and find `<div class="sections"></div> </div> </div>` replace it with `<div class="sections"></div> </div> <script>function showIframe() { var elements = document.querySelectorAll(".featurediframe"); elements.forEach(function(element) { element.style.display = "block"; }); } setTimeout(showIframe, 8000);</script></div>`
 
+this gives it an 8 second pause before loading adjusted by changing the final 8000 to a lower number like 5000 would give you five seconds pause before load.. adjust accordingly for clients that have slow internet.
 
-````
-<script>// page loads starts delay timer
-_delay = setInterval(delayCheck, 500)
-    // Function to load content after 8 seconds
-    function loadContentDelayed() {
-        setTimeout(function() {
-            // Replace 'featurediframe' with your CSS selector
-            var elements = document.querySelectorAll('.featurediframe');
-            elements.forEach(function(element) {
-                element.style.display = 'block';
-            });
-        }, 8000); // 8 seconds in milliseconds
-    }
-
-    // Call the function when the page finishes loading
-    window.onload = loadContentDelayed;
-</script>
-````
 
 # troubleshooting
 
