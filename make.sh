@@ -4,7 +4,7 @@
 #not found you need to run it via the bash command  #
 #for some reason on certain distros this doesnt get #
 #done automatically via the top line.... im looking #
-#at you wsl                                         # 
+#at you wsl                                         #
 #so the command would be sudo bash ./make.sh etc    #
 #####################################################
 # Default values
@@ -19,13 +19,13 @@ get_item_description() {
     local item_id="$2"
     local description
     #YOU MUST CHANGE THE LINE BELOW TO HAVE YOUR CORRECT LOCAL OR REMOTE DOMAIN / IP:PORT OR THE SCRIPT WILL FAIL TO PULL DESCRIPTIONS SO REPLACE YOURDOMAINNAMEHERE.
-    description=$(curl -s -H "X-Emby-Token: $api_key" "http://YOURDOMAINNAMEHERE/emby/Users/$user_id/Items?Ids=$item_id&fields=Overview" | jq -r '.Items[0].Overview')
+    description=$(curl -s -H "X-Emby-Token: $api_key" "http://YOUTDOMAINNAMEHERE/emby/Users/$user_id/Items?Ids=$item_id&fields=Overview" | jq -r '.Items[0].Overview')
     echo "$description"
 }
 
 # Set the user ID and API key for the request
-user_id="useridhere"  # Replace with the actual user ID
-api_key="validapikeyhere"  # Replace with your Jellyfin API key
+user_id="REPLACEME"  # Replace with the actual user ID
+api_key="REPLACEME"  # Replace with your Jellyfin API key
 
 
 # Function to display usage information
@@ -103,114 +103,7 @@ cat <<EOL > slideshow.html
 <html>
 <head>
     <title>Slideshow</title>
-    <style>
-@media (max-width: 768px) {
-    .item-description {
-        display: none;
-    }
-}
-
-        /* Include the Google Fonts stylesheet for the Noto Sans font */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
-
-/* Apply the font to the body or specific elements */
-body {
-  font-family: 'Noto Sans', sans-serif;
-}
-
-/* You can customize other text styles as needed */
-h1, h2, h3, p {
-  font-family: 'Noto Sans', sans-serif;
-  /* Additional styling properties can be added here */
-}
-
-/* Example: Change the font size and color */
-p {
-  font-size: 16px;
-  color: #333;
-}
-
-/* Example: Change the font size and color for headers */
-h1 {
-  font-size: 36px;
-  color: #FF5733;
-}
-
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-        .slide {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-.backdrop {
-    position: absolute;
-    top: 50%; /* Adjust this value to position the backdrop vertically */
-    left: 0;
-    width: 100%;
-    height: auto;
-    transform: translateY(-45%); /* Vertically center the backdrop */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
-}
-        .logo {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            max-height: 50%;
-            max-width:30%;
-            width: auto;
-        }
-.logo::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: -1; /* Place the shadow behind the logo */
-}
-.featured-content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    color: white;
-    font-size: 25px;
-}
-.item-description {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    font-size: 19px;
-    max-width: 50vw;
-    padding: 10px; /* Add padding for spacing */
-/*    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));*/
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgb(0 0 0 / 88%));
-    border-radius: 5px; /* Add rounded corners */
-}
-        .timer {
-            position: absolute;
-            display: none;
-            top: 20px;
-            left: 20px; /* Move the timer to the top left */
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            color: white;
-            font-size: 35px;
-            border-radius: 50%;
-        }
-    </style>
+    <link rel="stylesheet" href="./featuredstyles.css">
 </head>
 <body>
 EOL
@@ -221,65 +114,42 @@ for item_id in "${main_item_ids[@]}"; do
     backdrop_url="/Items/$item_id/Images/Backdrop/0"
     logo_url="/Items/$item_id/Images/Logo"
     description=$(get_item_description "$user_id" "$item_id")
-
     cat <<EOL >> slideshow.html
-    <a href="/#!/details?id=$item_id" class="slide" target="_top" rel="noreferrer">
-        <img class="backdrop" src="$backdrop_url" alt="Backdrop">
-        <img class="logo" src="$logo_url" alt="Logo">
+    <a href="/#!/details?id=$item_id" class="slide" id="slide_$item_id" target="_top" rel="noreferrer" tabindex="0">
+        <div class="grad"></div>
+        <img class="backdrop" src="$backdrop_url" alt="Backdrop" loading="lazy">
         <div class="featured-content">$HEADER</div>
         <div class="item-description">$description</div>
+        <img class="logo" src="/Items/$item_id/Images/Logo" alt="Logo" loading="lazy">
         <div class="timer"></div>
     </a>
 EOL
 done
 
-# Add the JavaScript for randomizing the order of slides
+# Add the JavaScript for keyboard navigation and slide functionality
 cat <<EOL >> slideshow.html
+<script src="featuredscripts.js" defer></script>
 <script>
-    // Function to shuffle an array
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+document.addEventListener('keydown', function(event) {
+    const slides = document.querySelectorAll('.slide');
+    let currentIndex = document.activeElement.tabIndex - 1;
 
-        return array;
+    switch(event.key) {
+        case 'ArrowRight':
+            if (currentIndex < slides.length - 1) {
+                slides[currentIndex + 1].focus();
+            }
+            break;
+        case 'ArrowLeft':
+            if (currentIndex > 0) {
+                slides[currentIndex - 1].focus();
+            }
+            break;
+        case 'Enter':
+            document.activeElement.click();
+            break;
     }
-
-    var slides = document.querySelectorAll(".slide");
-    var currentSlide = 0;
-    var shuffledIndexes = shuffleArray(Array.from({ length: slides.length }, (_, i) => i));
-
-    function showSlide(index) {
-        for (var i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[shuffledIndexes[index]].style.display = "block";
-        countdown = 10; // Reset countdown for each slide
-    }
-
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
-
-    showSlide(currentSlide);
-
-    // Initial call for the first slide
-    var countdown = 10;
-    var timer = document.querySelector(".timer");
-    timer.innerHTML = countdown;
-
-    function updateTimer() {
-        countdown--;
-        timer.innerHTML = countdown;
-        if (countdown <= 0) {
-            nextSlide();
-        }
-    }
-
-    // Timer for slide transition
-    setInterval(updateTimer, 1000);
+});
 </script>
 </body>
 </html>
