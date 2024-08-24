@@ -275,3 +275,10 @@ itemid
 itemid
 
 ---
+
+
+## Bugfix on chrome
+
+okay so when you reload the cache on chrome this can break on the first two reloads... to fix reload the cache.. then reload twice 
+
+for some reason i have only reproduced this on a limited childs account that could not access all age ranges.
