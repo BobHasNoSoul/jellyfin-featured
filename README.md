@@ -10,63 +10,75 @@ well it makes a featured banner that changes every 10 seconds to the next item d
 
 ## REQUIREMENTS
 - a jellyfin install
-- jq installed on the system for the descriptions to load `sudo apt install jq`
+- a brain
 - the ability to read this guide. (maybe also grab my avatars pack that will be updated soon too)
 
 ## okay so there have been a number of updates
 
-API integration to also pull the details for the items that are in the lists.. for this you need to modify make.sh with your userid and an api key for jellyfin like we did with pull.py but in make.sh, everything else stays the same but it has a sleeker look.
+oh no major updates (okay so since i got tagged in an issue a user was having with the alternate.html im going to rewrite it in my image.. for i am... bob)
 
-the old version without the update to descriptions etc can still be used at makeold.sh
-API integration to pull a specific user favorites, you can use that by editing the pull.py and adding your own userid (its in the address bar when you edit that user userid=STRINGYOUNEEDHERE so you would only copy the part that is after the = sign) then you put your api key in there from jellyfin (generate a new one if needed) you then simply need to make sure your base_url is correct so specify the correct ip and port or use a domain name etc then save it 
+what it does now (oh no there is no need to get an api key.. or userid 
 
-to update it to your favorites you need to run this command after you have completed the above steps of editing the one file with the needed keys and ids `sudo ./make.sh -p -h "Featured Content" -l ./userfavorites.txt` if you wish the userfavorites to be shuffled so they are not in alphabetical order just run this command `sudo ./make.sh -p -m -h "Featured Content" -l ./shuffle.txt`
+if no list.txt is present the user that is currently logged in will see random items that that user has access to (so kids dont get recommended horror films that give them nightmares or your friend that doesnt understand your anime fettish doesnt get your anime library.. yes this is about someone.. you know who you are). 
 
-you can still make manual lists like i have by editing the files in lists directory with the itemid of the content (in the url there is an itemid in there that you just put one per line its really quite simple. 
+does it have the same format for lists.txt? No 
+
+now it goes 
+
+Title of playlist here
+itemid
+itemid
+itemid
+
+this is great for custom playlists and loads really really fast
+
+it is slower to load random lists because it does a api call and fetch
+
+oh also because people have items without both backdrops and logos ive taken care of that.. they will not load slides containing an item without both a backdrop and a logo.. do not open an issue about this not loading your logoless item.. it looks weird if you dont have both.. if you want that fork the repo and mod to your hearts content.. if you made it a toggle.. i would happily accept a pull request however i really cant be arsed to re theme a logo-less one and then a backdropless one.
 
 
+## sudo Crontab example
+okay so this assumes you already have the lists made i reccomend using lists/halloween.txt etc as a naming standard
 
-## Crontab example
-To use crontabs sucessfully you should edit the bottom line of the make.sh script to point to where you have your mounted avatars folder for slideshow.html to be injected properly.
+so with that said we will be doing a simple keep your lists out of the dir then copy them over crontab so they auto update.
 
 ``` 
 # christmas featured list (1st december)
-0 1 1 12 * /path/to/jellyfin-featured/make.sh -h "Christmas Season" -l /path/to/jellyfin-featured/lists/christmas.txt
+0 1 1 12 * cp /path/to/lists/christmas.txt /usr/share/jellyfin/web/avatars/list.txt
 #new year featured list (day after boxing day)
-0 1 27 12 * /path/to/jellyfin-featured/make.sh -h "Happy New Year" -l /path/to/jellyfin-featured/lists/newyears.txt
-#Normal list (2nd jan)
-0 1 2 1 * /path/to/jellyfin-featured/make.sh -h "Featured Content" -l /path/to/jellyfin-featured/lists/normal.txt
+0 1 27 12 * cp /path/to/lists/newyears.txt /usr/share/jellyfin/web/avatars/list.txt
+#Normal random list (2nd jan)
+0 1 2 1 * rm /usr/share/jellyfin/web/avatars/list.txt
 #Valentines Day (10th onwards)
-0 1 10 2 * /path/to/jellyfin-featured/make.sh -h "Valentines Hits" -l /path/to/jellyfin-featured/lists/valentines.txt
+0 1 10 2 * cp /path/to/lists/valentines.txt /usr/share/jellyfin/web/avatars/list.txt
 #Normal list (15th feb)
-0 1 15 2 * /path/to/jellyfin-featured/make.sh -h "Featured Content" -l /path/to/jellyfin-featured/lists/normal2.txt
+0 1 15 2 * rm /usr/share/jellyfin/web/avatars/list.txt
 #Easter (mar 15th onwards)
-0 1 15 3 * /path/to/jellyfin-featured/make.sh -h "Easter Eggs-travaganza" -l /path/to/jellyfin-featured/lists/easter.txt
+0 1 15 3 * cp /path/to/lists/easter.txt /usr/share/jellyfin/web/avatars/list.txt
 #Normal list (15th april)
-0 1 15 4 * /path/to/jellyfin-featured/make.sh -h "Featured Content" -l /path/to/jellyfin-featured/lists/normal.txt
+0 1 15 4 * rm /usr/share/jellyfin/web/avatars/list.txt
 #Halloween (1st october onwards)
-0 1 1 10 * /path/to/jellyfin-featured/make.sh -h "Halloween Featured" -l /path/to/jellyfin-featured/lists/halloween.txt
+0 1 1 10 * cp /path/to/lists/halloween.txt /usr/share/jellyfin/web/avatars/list.txt
 #Normal list (1nd nov)
-0 1 1 11 * /path/to/jellyfin-featured/make.sh -h "Featured Content" -l /path/to/jellyfin-featured/lists/normal2.txt
+0 1 1 11 * rm /usr/share/jellyfin/web/avatars/list.txt
 #Stephenkings brithday 21st september
-0 1 21 9 * /path/to/jellyfin-featured/make.sh -h "Stephen King Day" -l /path/to/jellyfin-featured/lists/stephenking.txt
+0 1 21 9 * cp /path/to/lists/stephenking.txt /usr/share/jellyfin/web/avatars/list.txt
 #Normal list (1nd nov)
-0 1 22 9 * /path/to/jellyfin-featured/make.sh -h "Featured Content" -l /path/to/jellyfin-featured/lists/normal2.txt
+0 1 22 9 * rm /usr/share/jellyfin/web/avatars/list.txt
 ```
 
 ## Installation
 
  - Windows Install
 
-1. download the files from this repo using the zip or gitclone, you pick.
+1. download the files from this repo using the zip or gitclone, you pick.. its the same result
 2. install ubuntu from the windows store and use windows subsystem linux for the shell script (you could use cygwin but at this point there isnt a real reason to).
-3. open `C:\Program Files\Jellyfin\Server\jellyfin-web\` and create a new folder called `avatars` this will be where the slideshow.html featuredstyles.css and featuredscripts.js will be living.
+3. open `C:\Program Files\Jellyfin\Server\jellyfin-web\` and create a new folder called `avatars` this will be where the slideshow.html will be living.
 4. open ubuntu for windows via the start menu and enter the following commands
 
 ```
-sudo apt install jq python3
 cd "/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/"
-ls | grep home-html
+ls | grep home-htm
 ```
  copy the output line that is like this but the uuid changed home-html.YOURSWILLHAVENUMBERSHERE.chunk.js you will need to modify that file with the following.
 
@@ -78,108 +90,183 @@ find this part
 
 okay now we have injected the iframe we are %80 of the way there.
 
-5. get the following info api key for jellyfin (settings page of jellyfin look for api and make a new one), your website url (or your ip and port), a user uuid (get this from the profile page and the url will look like this `http://192.168.1.76:8096/web/index.html#!/useredit.html?userId=8cc7e498c8e84dae945321f091ad675f` the uuid for that user is the end part `8cc7e498c8e84dae945321f091ad675f` 
+5. Okay so now we just need to edit the index.html in your webroot (/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/index.html) so open it in your favorite text editor and find the following 
 
-6. edit pull.py and add your API key from jellyfin and user uuid in there and save
+`</body></html>`
 
-7. edit make.sh and add your API key from jellyfin, user uuid and webite url on line 18 onwards (there are only three options to edit there)
+replace with 
 
-7b. optional edit the bottom to point to your avatars folder and replace itself on each run making it semi automatic so you can run it as a crontab.
-example for most installs will be the following `sudo cp slideshow.html '/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/slideshow.html` `sudo cp featuredstyles.css /mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/featuredstyles.css` `sudo cp featuredscripts.js '/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/avatars/featuredscripts.js' `
+`<script>
+// Function to save credentials to sessionStorage
+function saveCredentialsToSessionStorage(credentials) {
+  try {
+    // Store the credentials in sessionStorage
+    sessionStorage.setItem('json-credentials', JSON.stringify(credentials));
+    console.log('Credentials saved to sessionStorage.');
+  } catch (error) {
+    console.error('Error saving credentials:', error);
+  }
+}
 
-8. save the file and run it in the ubuntu window via `./make.sh -p -l userfavorites.txt -h "TEXT FOR TITLE HERE"`
+// Function to save the API key to sessionStorage
+function saveApiKey(apiKey) {
+  try {
+    sessionStorage.setItem('api-key', apiKey);
+    console.log('API key saved to sessionStorage.');
+  } catch (error) {
+    console.error('Error saving API key:', error);
+  }
+}
 
-9. now add this as a customcss inside the admin dashboard `@media only screen and (max-device-width: 767px) {.featurediframe {height: 16vh !important;}}` this fixes the display on mobile
+// Override the default console.log function
+(function() {
+  var originalConsoleLog = console.log;
 
-10. done get your clients to reload their cache and it will be there if you dont have any favorites before running step 8 it will give you a white box, add some favorites and pull them again with the command from step 8, also you could use the list.txt as outlined in the readme. (this is a hobby not my main job so its kinda a rush to throw all the info up here then head out to work).
+  console.log = function(message) {
+    // Call the original console.log method
+    originalConsoleLog.apply(console, arguments);
+
+    // Check if the message contains the JSON credentials
+    if (typeof message === 'string' && message.startsWith('Stored JSON credentials:')) {
+      try {
+        // Extract the JSON credentials from the message
+        var jsonString = message.substring('Stored JSON credentials: '.length);
+        var credentials = JSON.parse(jsonString);
+
+        // Save the credentials to sessionStorage
+        saveCredentialsToSessionStorage(credentials);
+      } catch (error) {
+        console.error('Error parsing credentials:', error);
+      }
+    }
+
+    // Check if the message contains the WebSocket URL with api_key
+    if (typeof message === 'string' && message.startsWith('opening web socket with url:')) {
+      try {
+        // Extract the API key from the message
+        var url = message.split('url:')[1].trim();
+        var urlParams = new URL(url).searchParams;
+        var apiKey = urlParams.get('api_key');
+
+        if (apiKey) {
+          saveApiKey(apiKey);
+        }
+      } catch (error) {
+        console.error('Error extracting API key:', error);
+      }
+    }
+  };
+})();
+</script>
+</body></html>`
+
+6. save the file and close the file
+
+7. simply reload the page after clearing the cache (incognito mode or ctrl+shift+r on some browsers)
+
+7b (optional). make custom lists and crontab them for best effect
 
 ---
 
-if you are using docker you will need to change the directories it is using for your mapped directories, and then the steps are pretty much identical.
+## Docker
 
-*if you are using windows, you have to put it in your C:\Program Files\Jellyfin\Server\jellyfin-web\avatars\ directory and modify the home-html.chunk in the C:\Program Files\Jellyfin\Server\jellyfin-web\ directory directly*
+Instructions to be added at a later date
 
-*if you are using bare metal install of jellyfin on linux i will assume you already know where the server files for jellyfin-web are installed if not they will be in the log when you first start the server.*
+---
 
-*if your users cannot see it they need to clear their browser data/cache NOTE: description has been disabled for mobile users because of restrictions on screen space*
+## Linux
 
-You need to link you home-html chunk js file in docker to a custom file on your server if using docker
+to install on linux it is super simple 
 
-first find your file name (every file name is different because the random string generated on install)
-run the following commands (this assumes official docker image on linux)
+your webroot is /usr/share/jellyfin/web (by default if it isnt just adjust this for your custom one you put in) 
 
-`sudo docker exec -it jellyfin /bin/bash`
-then 
-`cd /jellyfin/jellyfin-web/`
-then 
-`ls | grep home-html`
+inside webroot make the avatars folder and then download the slideshow.html from this repo and put that inside the avatars folder inside of webroot (that should be /usr/share/jellyfin/web/avatars/slideshow.html)
 
-it will output a line like `home-html.5c3fgf6ba3bf5ap999c.chunk.js` you want to use that in the next part because your random string should be different
+when inside the webroot run  the following
 
-e.g. in your volumes you would put something like this but obviously change the random string to match yours you just found
+`sudo nano index.html`
 
-`- ./custom-html-chunk.js:/jellyfin/jellyfin-web/home-html.5c3fgf6ba3bf5ap999c.chunk.js`
+find `</body></html>`
 
-you will need to bring the docker container up again with the mapping changes.
+replace with 
 
-this will be edited to iject the iframe as needed for the featured bar In that file you need to insert the following code directly after  `data-backdroptype="movie,series,book">` 
+`<script>
+// Function to save credentials to sessionStorage
+function saveCredentialsToSessionStorage(credentials) {
+  try {
+    // Store the credentials in sessionStorage
+    sessionStorage.setItem('json-credentials', JSON.stringify(credentials));
+    console.log('Credentials saved to sessionStorage.');
+  } catch (error) {
+    console.error('Error saving credentials:', error);
+  }
+}
 
-the code to insert is 
-`<style> .featurediframe { width: 89vw; height: 300px; display: block; margin: 0 auto;} </style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe> `
+// Function to save the API key to sessionStorage
+function saveApiKey(apiKey) {
+  try {
+    sessionStorage.setItem('api-key', apiKey);
+    console.log('API key saved to sessionStorage.');
+  } catch (error) {
+    console.error('Error saving API key:', error);
+  }
+}
 
-save the file
+// Override the default console.log function
+(function() {
+  var originalConsoleLog = console.log;
 
-then you need a new mapping create a folder called avatars and map that to /usr/share/jellyfin/web/avatars for example
+  console.log = function(message) {
+    // Call the original console.log method
+    originalConsoleLog.apply(console, arguments);
 
-`- ./avatars:/jellyfin/jellyfin-web/avatars`
+    // Check if the message contains the JSON credentials
+    if (typeof message === 'string' && message.startsWith('Stored JSON credentials:')) {
+      try {
+        // Extract the JSON credentials from the message
+        var jsonString = message.substring('Stored JSON credentials: '.length);
+        var credentials = JSON.parse(jsonString);
 
-## Alternate Installation
-thanks to SethBacon at forum.jellyfin.org for this custom html that allows for 200 movies/shows etc to be pulled when there is an abscence of a list.txt written mainly in javascript creates a slightly different experiance 
+        // Save the credentials to sessionStorage
+        saveCredentialsToSessionStorage(credentials);
+      } catch (error) {
+        console.error('Error parsing credentials:', error);
+      }
+    }
 
-![phone](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/13c20204-2af4-4412-b485-004ff5201f24)
-![Capture2](https://github.com/BobHasNoSoul/jellyfin-featured/assets/23018412/6dbd403d-fe75-48b5-a4cf-6ed4d8b45cb3)
+    // Check if the message contains the WebSocket URL with api_key
+    if (typeof message === 'string' && message.startsWith('opening web socket with url:')) {
+      try {
+        // Extract the API key from the message
+        var url = message.split('url:')[1].trim();
+        var urlParams = new URL(url).searchParams;
+        var apiKey = urlParams.get('api_key');
 
-simply edit alternate.html and change the "CHANGEME" sections for the userid and api key then save a copy of alternate.html as slideshow.html in your avatars dir 
+        if (apiKey) {
+          saveApiKey(apiKey);
+        }
+      } catch (error) {
+        console.error('Error extracting API key:', error);
+      }
+    }
+  };
+})();
+</script>
+</body></html>`
 
-this will then pull on load a list of 200 random movies and tv shows it also gives a nice looking style to it to match the original jellyfin theming including header. 
+then run `sudo nano home-html.*.chunk.js`
 
-NOTE: THIS VERSION ISNT ABLE TO BE RAN VIA MAKE.SH YET SO CRONTAB EXAMPLE WILL NOT WORK FOR IT.. YET
+find `data-backdroptype="movie,series,book">` and insert the following directly after the `>`
 
-## USAGE: 
-now create a slideshow with your links we need to create a list.txt with our itemids one per line you can get your ids from the url of the item you are wanting to link e.g. `https://example/web/index.html#!/details?id=32e64643a3a798aa85943d6b55c4a038&context=tvshows` becomes `32e64643a3a798aa85943d6b55c4a038`
+`<style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto}</style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe>`
 
-`sudo chmod +x ./make.sh`
+now save it and you should be good to go once you reload your browsers cache on the client side 
 
-you can now run the main script by using `./make.sh -h "YOUR TITLE HERE" -l ./list.txt` that will create the featured bar be populated with the items which ids are in list.txt and have a title of "YOUR TITLE HERE" simply change that as appropriate
+optional make a list.txt inside /usr/share/jellyfin/web/avatars/list.txt using the following syntax
 
-it will make the new file "slideshow.html" copy that into your avatars dir you made and mapped a second ago and bring up the docker container again with the new mapping for the avatars folder.
+TITLE OF PLAYLIST HERE
+itemid
+itemid
+itemid
 
-you can add the following line but edit it to fit your specific setup in make.sh
-`cp slideshow.html /path/to/mapped/slideshow.html`
-
-all done
-
-# If you experiance slow loading of the interface because of 200+ images on clients with slow internet connection you can fix that by editing the following
-
-in home-html you need to add this to the already inserted code from above all we are doing is adding the display none part to it. 
-
-`<iframe class="featurediframe" src="/web/avatars/slideshow.html" style="display:none;"></iframe>`
-
-you now need to edit same file and find `<div class="sections"></div> </div> </div>` replace it with `<div class="sections"></div> </div> <script>function showIframe() { var elements = document.querySelectorAll(".featurediframe"); elements.forEach(function(element) { element.style.display = "block"; }); } setTimeout(showIframe, 8000);</script></div>`
-
-this gives it an 8 second pause before loading adjusted by changing the final 8000 to a lower number like 5000 would give you five seconds pause before load.. adjust accordingly for clients that have slow internet.
-
-
-# troubleshooting
-
-my page wont load the featured bar
-
-firstly i want you to check you created the slideshow.html correctly go to your server /web/avatars/slideshow.html
-
-if that displays correctly you need to simply refresh your cache for that modified file so either clear your entire browsers cache since the dawn of time or reload that specific file 
-
-in firefox for example open YOURSERVERURL.COM/web/home-html.YOURUUIDHERE.chunk.js
-now press the following at the same time CTRL+shift+R it will reload and show you the changed file now it should work fine
-
-if your slideshow is not working check your make.sh for the correct api key and userid.. yes it is required.. you then want to get the list.txt configured correctly with the itemid only (i have had people message me about putting full links into the list but its not something i plan to implement but feel free to submit a pull request if you want to add that yourself)
-
+---
