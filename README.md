@@ -101,7 +101,8 @@ okay now we have injected the iframe we are %80 of the way there.
 
 replace with 
 
-`<script>
+```
+<script>
 // Function to save credentials to sessionStorage
 function saveCredentialsToSessionStorage(credentials) {
   try {
@@ -163,7 +164,8 @@ function saveApiKey(apiKey) {
   };
 })();
 </script>
-</body></html>`
+</body></html>
+```
 
 6. save the file and close the file
 
@@ -183,7 +185,7 @@ Instructions to be added at a later date
 
 to install on linux it is super simple 
 
-your webroot is /usr/share/jellyfin/web (by default if it isnt just adjust this for your custom one you put in) 
+your webroot is `/usr/share/jellyfin/web` (by default if it isnt just adjust this for your custom one you put in) 
 
 inside webroot make the avatars folder and then download the slideshow.html from this repo and put that inside the avatars folder inside of webroot (that should be /usr/share/jellyfin/web/avatars/slideshow.html)
 
