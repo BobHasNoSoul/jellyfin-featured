@@ -198,7 +198,8 @@ find `</body></html>`
 
 replace with 
 
-`<script>
+```
+<script>
 // Function to save credentials to sessionStorage
 function saveCredentialsToSessionStorage(credentials) {
   try {
@@ -260,7 +261,9 @@ function saveApiKey(apiKey) {
   };
 })();
 </script>
-</body></html>`
+</body></html>
+
+```
 
 then run `sudo nano home-html.*.chunk.js`
 
