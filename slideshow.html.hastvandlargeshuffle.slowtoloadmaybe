@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jellyfin Featured Slideshow Remix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <style>
+        /* Minified and critical CSS here */
+        body { margin: 0; padding: 0; overflow: hidden; }
+        .slide { opacity: 0; transition: opacity 1s ease-in-out; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide:focus { outline: 2px solid #fff; }
+        .backdrop { position: absolute; right: 0; width: 62%; height: calc(100% - -50px); object-fit: cover; object-position: center 20%; border-radius: 5px; z-index: 1; }
+        .logo { position: absolute; top: 31%; left: 5%; transform: translateY(-50%); max-height: 60%; max-width: 30%; width: auto; z-index: 3; }
+        .featured-content { position: absolute; top: 0; left: 0; width: 100%; height: 50px; background-color: transparent; font-family: 'Noto Sans', sans-serif; color: #D3D3D3; font-size: 22px; display: none; align-items: center; justify-content: flex-start; z-index: 2; }
+        .plot { position: absolute; bottom: 10px; left: 25px; color: white; width: 37%; font-family: 'Noto Sans', sans-serif; font-size: 18px; border-radius: 5px; z-index: 4; box-sizing: border-box; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .gradient-overlay { position: absolute; top: 0; left: 0; width: 79%; height: 100%; background: linear-gradient(to right, rgb(16, 16, 16) 49%, rgba(0, 0, 0, 0) 70%); z-index: 2; }
+        @media only screen and (max-width: 767px) {
+            .plot { bottom: 1px !important; left: 0; width: 100% !important; font-size: 8px !important; border-radius: 1px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="slides-container"></div>
+    <script>
+        // Configuration variables
+        const shuffleInterval = 10000;
+        const listFileName = 'list.txt';
+
+        const jsonCredentials = sessionStorage.getItem('json-credentials');
+        const apiKey = sessionStorage.getItem('api-key');
+
+        let userId = null;
+        let token = null;
+
+        if (jsonCredentials) {
+            const credentials = JSON.parse(jsonCredentials);
+            userId = credentials.Servers[0].UserId;
+            token = credentials.Servers[0].AccessToken;
+        }
+
+        const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+
+        const truncateText = (element, maxLength) => {
+            let text = element.innerText;
+            if (text.length > maxLength) element.innerText = text.substring(0, maxLength) + '...';
+        };
+
+        const createSlideElement = (item, title) => {
+            const itemId = item.Id;
+            const plot = item.Overview || 'No overview available';  // Fallback text if overview is missing
+
+            const slide = document.createElement('a');
+            slide.className = 'slide';
+            slide.href = `/web/#/details?id=${itemId}`;
+            slide.target = '_top';
+            slide.rel = 'noreferrer';
+            slide.tabIndex = 0;
+
+            slide.addEventListener('keydown', (event) => {
+                if (event.keyCode === 13) window.location.href = slide.href;
+            });
+
+            const backdrop = document.createElement('img');
+            backdrop.className = 'backdrop';
+            backdrop.src = `/Items/${itemId}/Images/Backdrop/0`;
+            backdrop.alt = 'Backdrop';
+            backdrop.loading = 'lazy';
+
+            const logo = document.createElement('img');
+            logo.className = 'logo';
+            logo.src = `/Items/${itemId}/Images/Logo`;
+            logo.alt = 'Logo';
+            logo.loading = 'lazy';
+
+            const featuredContent = document.createElement('div');
+            featuredContent.className = 'featured-content';
+            featuredContent.textContent = title;
+
+            const plotElement = document.createElement('div');
+            plotElement.className = 'plot';
+            plotElement.textContent = plot;
+            truncateText(plotElement, 240);  // Truncate the text to fit within the plot area
+
+            const gradientOverlay = document.createElement('div');
+            gradientOverlay.className = 'gradient-overlay';
+
+            slide.append(backdrop, gradientOverlay, logo, featuredContent, plotElement);
+            return slide;
+        };
+
+        const createSlideForItem = async (item, title) => {
+            const container = document.getElementById('slides-container');
+            const itemId = item.Id;
+            const backdropUrl = `/Items/${itemId}/Images/Backdrop/0`;
+            const logoUrl = `/Items/${itemId}/Images/Logo`;
+
+            const [backdropExists, logoExists] = await Promise.all([
+                fetch(backdropUrl, { method: 'HEAD' }).then(res => res.ok),
+                fetch(logoUrl, { method: 'HEAD' }).then(res => res.ok)
+            ]);
+
+            if (backdropExists && logoExists) {
+                const slideElement = createSlideElement(item, title);
+                container.appendChild(slideElement);
+                console.log(`Added slide for item ${itemId}`); // Debugging log
+            } else {
+                console.warn(`Skipping item ${itemId}: Missing backdrop or logo.`);
+            }
+        };
+
+        const fetchItemDetails = async (itemId) => {
+            const response = await fetch(`/Users/${userId}/Items/${itemId}`, {
+                headers: {
+                    'Authorization': `MediaBrowser Client="Jellyfin Web", Device="YourDeviceName", DeviceId="YourDeviceId", Version="YourClientVersion", Token="${token}"`
+                }
+            });
+            const item = await response.json();
+            console.log("Item Title:", item.Name);
+            console.log("Item Overview:", item.Overview);
+            return item;
+        };
+
+        const fetchItemsFromServer = async () => {
+            try {
+                const response = await fetch(`/Users/${userId}/Items?IncludeItemTypes=Movie,Series&Recursive=true&hasOverview=true&imageTypes=Logo,Backdrop&Limit=3000`, {
+                    headers: {
+                        'Authorization': `MediaBrowser Client="Jellyfin Web", Device="YourDeviceName", DeviceId="YourDeviceId", Version="YourClientVersion", Token="${token}"`
+                    }
+                });
+                const data = await response.json();
+                const items = data.Items;
+                console.log('Fetched items:', items); // Debugging log
+
+                // Separate movies and TV shows
+                const movies = items.filter(item => item.Type === 'Movie');
+                const tvShows = items.filter(item => item.Type === 'Series');
+                console.log('Movies:', movies); // Debugging log
+                console.log('TV Shows:', tvShows); // Debugging log
+
+                // Shuffle and select
+                const shuffledMovies = shuffleArray(movies);
+                const shuffledTvShows = shuffleArray(tvShows);
+                const selectedMovies = shuffledMovies.slice(0, 15); // Adjust number as needed
+                const selectedTvShows = shuffledTvShows.slice(0, 15); // Adjust number as needed
+
+                // Combine movies and TV shows in alternating order
+                const allItems = [];
+                const maxLength = Math.max(selectedMovies.length, selectedTvShows.length);
+
+                for (let i = 0; i < maxLength; i++) {
+                    if (i < selectedMovies.length) allItems.push(selectedMovies[i]);
+                    if (i < selectedTvShows.length) allItems.push(selectedTvShows[i]);
+                }
+
+                const itemPromises = allItems.map(item => fetchItemDetails(item.Id));
+                const itemsDetails = await Promise.all(itemPromises);
+                await createSlidesForItems(itemsDetails);
+                initializeSlideshow();
+            } catch (error) {
+                console.error('Error fetching items:', error);
+            }
+        };
+
+        const createSlidesForItems = async (items) => {
+            // Assuming that all items are combined in alternating order
+            await Promise.all(items.map(item => createSlideForItem(item, item.Type === 'Movie' ? 'Movie' : 'TV Show')));
+        };
+
+        const initializeSlideshow = () => {
+            const slides = document.querySelectorAll(".slide");
+            let currentSlide = 0;
+
+            const showSlide = (index) => {
+                slides.forEach((slide) => slide.classList.remove("active"));
+                slides[index].classList.add("active");
+            };
+
+            showSlide(currentSlide);
+
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, shuffleInterval);
+        };
+
+        // Fetch items when the script is loaded
+        if (jsonCredentials && apiKey) {
+            fetchItemsFromServer();
+        } else {
+            console.error('No credentials or API key found.');
+        }
+    </script>
+</body>
+</html>
