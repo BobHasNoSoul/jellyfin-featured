@@ -47,18 +47,18 @@
     }
 
     .logo-container {
-      width: 30%;
+      width: 35%;
       height: 100%;
       position: relative;
     }
 
     .logo {
       position: absolute;
-      top: 31%;
+      top: 20px;
       left: 50%;
-      transform: translate(-25%, -50%);
-      max-height: 60%;
-      max-width: 30%;
+      transform: translateX(-50%);
+      max-height: 30%;
+      max-width: 20%;
       width: auto;
       z-index: 3;
       /* Lazy loading */
@@ -81,19 +81,18 @@
       z-index: 2;
     }
 
-    .plot {
+    .plot-container {
       position: absolute;
-      bottom: 15px;
       left: 0;
-      /* Align to the left edge */
-      /*right: 0; */
+      bottom: 0;
       color: white;
       width: 33%;
+      height: 60%;
       /* Full width */
       font-family: 'Noto Sans', sans-serif;
       font-size: 15px;
       /*background: linear-gradient(to top, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 100%);*/
-      padding: 10px 0 0 15px;
+      padding: 10px 0 25px 15px;
       border-radius: 5px;
       z-index: 4;
       box-sizing: border-box;
@@ -107,6 +106,14 @@
       /* Center text within the element */
     }
 
+    .plot {
+      display: -webkit-box;
+      overflow: hidden;
+      line-clamp: 8;
+      -webkit-line-clamp: 8;
+      -webkit-box-orient: vertical;
+    }
+
     .gradient-overlay {
       position: absolute;
       top: 0;
@@ -118,32 +125,45 @@
     }
 
     @media only screen and (max-width: 767px) {
-      .plot {
-        position: absolute;
-        bottom: 1px !important;
-        left: 0;
-        /* Align to the left edge */
-        /*right: 0; */
-        color: white;
-        width: 100% !important;
-        /* Full width */
-        font-family: 'Noto Sans', sans-serif;
-        font-size: 8px !important;
-        /*background: linear-gradient(to top, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 100%);*/
-        /*padding: 10px;*/
-        border-radius: 1px;
-        z-index: 4;
-        box-sizing: border-box;
-        /* Flexbox for centering text */
-        display: flex;
-        align-items: center;
-        /* Center vertically */
-        justify-content: center;
-        /* Center horizontally */
-        text-align: center;
-        /* Center text within the element */
+      .gradient-overlay {
+        width: 100%;
+        height: 88%;
+        top: unset;
+        bottom: 0;
+        background: linear-gradient(to top, rgb(0, 0, 0) 49%, rgba(0, 0, 0, 0) 70%);
       }
 
+      .backdrop {
+        width: 100%;
+      }
+
+      .logo-container {
+        width: 30%;
+        height: 35%;
+      }
+
+      .logo {
+        left: 15px;
+        transform: translateY(-65%);
+        top: 50%;
+        height: 60%;
+        max-height: unset;
+        max-width: unset;
+        padding: 5px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 5px;
+      }
+
+      .plot-container {
+        padding: 10px;
+        height: 45%;
+        width: 100%;
+      }
+
+      .plot {
+        line-clamp: 6;
+        -webkit-line-clamp: 6;
+      }
     }
   </style>
 </head>
@@ -245,6 +265,7 @@
       logo.className = 'logo';
       logo.src = `/Items/${itemId}/Images/Logo`;
       logo.alt = 'Logo';
+
       const logoContainer = document.createElement('div');
       logoContainer.className = 'logo-container';
       logoContainer.appendChild(logo);
@@ -253,12 +274,16 @@
       featuredContent.className = 'featured-content';
       featuredContent.textContent = title;
 
-      const plotElement = document.createElement('div');
+      const plotElement = document.createElement('span');
       plotElement.className = 'plot';
       plotElement.textContent = plot;
 
+      const plotContainer = document.createElement('div');
+      plotContainer.className = 'plot-container';
+      plotContainer.appendChild(plotElement);
+
       // Truncate the text of this specific plot element
-      truncateText(plotElement, 240); // Adjust 240 to your preferred character limit
+      // truncateText(plotContainer, 240); // Adjust 240 to your preferred character limit
 
       // Gradient overlay
       const gradientOverlay = document.createElement('div');
@@ -268,7 +293,7 @@
       slide.appendChild(backdrop);
       slide.appendChild(logoContainer);
       slide.appendChild(featuredContent);
-      slide.appendChild(plotElement);
+      slide.appendChild(plotContainer);
 
       return slide;
     }
