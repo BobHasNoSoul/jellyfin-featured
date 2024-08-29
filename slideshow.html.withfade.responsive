@@ -127,7 +127,7 @@
     @media only screen and (max-width: 767px) {
       .gradient-overlay {
         width: 100%;
-        height: 88%;
+        height: 68%;
         top: unset;
         bottom: 0;
         background: linear-gradient(to top, rgb(0, 0, 0) 49%, rgba(0, 0, 0, 0) 70%);
@@ -156,13 +156,13 @@
 
       .plot-container {
         padding: 10px;
-        height: 45%;
+        height: 35%;
         width: 100%;
       }
 
       .plot {
-        line-clamp: 6;
-        -webkit-line-clamp: 6;
+        line-clamp: 4;
+        -webkit-line-clamp: 4;
       }
     }
   </style>
