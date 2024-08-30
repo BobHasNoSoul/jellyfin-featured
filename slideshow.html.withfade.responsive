@@ -48,17 +48,16 @@
 
     .logo-container {
       width: 35%;
-      height: 100%;
+      height: 40%;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .logo {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-height: 30%;
-      max-width: 20%;
+      max-height: 80%;
+      max-width: 80%;
       width: auto;
       z-index: 3;
       /* Lazy loading */
@@ -138,17 +137,11 @@
       }
 
       .logo-container {
-        width: 30%;
+        width: 100%;
         height: 35%;
       }
 
       .logo {
-        left: 15px;
-        transform: translateY(-65%);
-        top: 50%;
-        height: 60%;
-        max-height: unset;
-        max-width: unset;
         padding: 5px;
         background: rgba(0,0,0,0.5);
         border-radius: 5px;
