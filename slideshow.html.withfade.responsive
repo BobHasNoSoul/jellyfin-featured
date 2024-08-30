@@ -137,8 +137,11 @@
       }
 
       .logo-container {
-        width: 100%;
+        width: 50%;
         height: 35%;
+        justify-content: start;
+        align-items: start;
+        margin: 10px;
       }
 
       .logo {
