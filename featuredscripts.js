@@ -1,7 +1,6 @@
 // Configuration variables
 const shuffleInterval = 8000; // Time in milliseconds between slide changes
 const listFileName = 'list.txt'; // Name of the file containing the list of movie IDs
-const showListFileName = 'listShows.txt';
 
 // Fetch credentials from sessionStorage
 const jsonCredentials = sessionStorage.getItem('json-credentials');
@@ -93,7 +92,6 @@ function createSlideElement(movie, title, index) {
     slide.href = `#/!details?id=${itemId}`;
     slide.target = '_top';
     slide.rel = 'noreferrer';
-    //slide.setAttribute('tabindex', '0'); // Make the slide focusable
     slide.setAttribute('data-index', index); // Assign a unique data-index for each slide
 
     const backdrop = document.createElement('img');
@@ -181,7 +179,7 @@ function initializeSlideshow() {
     }
 
     document.addEventListener('keydown', function(event) {
-        if (document.activeElement.classList.contains('slide')) {
+        if (document.activeElement.classList.contains('slide') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
             userInitiatedChange = true; // Set the flag for user-initiated change
             event.preventDefault();
             handleArrowKeys(event);
@@ -194,36 +192,19 @@ function initializeSlideshow() {
 
 function fetchMovies() {
     const noCacheUrl = "/web/avatars/" + listFileName + '?' + new Date().getTime();
-    const noShowCacheUrl = "/web/avatars/" + showListFileName + '?' + new Date().getTime();
 
-    fetch(noShowCacheUrl)
+    fetch(noCacheUrl)
         .then(response => {
             if (response.ok) {
                 return response.text();
             } else {
-                throw new Error('showList.txt not found, fetching shows from server.');
+                throw new Error('list.txt not found, fetching movies from server.');
             }
         })
         .then(text => {
             const lines = text.split('\n').filter(Boolean);
-            const showIds = shuffleArray(lines.map(line => line.substring(0, 32))).slice(0, 10);
-            return showIds;
-        })
-        .then(showIds => {
-            return fetch(noCacheUrl)
-                .then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('list.txt not found, fetching movies from server.');
-                    }
-                })
-                .then(text => {
-                    const lines = text.split('\n').filter(Boolean);
-                    const movieIds = shuffleArray(lines.map(line => line.substring(0, 32))).slice(0, 10);
-                    const combinedIds = shuffleArray([...showIds, ...movieIds]); // Combine show and movie IDs
-                    return Promise.all(combinedIds.map(id => fetchMovieDetails(id)));
-                });
+            const movieIds = shuffleArray(lines.map(line => line.substring(0, 32)));
+            return Promise.all(movieIds.map(id => fetchMovieDetails(id)));
         })
         .then(movies => {
             const moviePromises = movies.map((movie, index) => createSlideForMovie(movie, 'Spotlight', index));
