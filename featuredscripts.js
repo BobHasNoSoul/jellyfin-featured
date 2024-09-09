@@ -1,4 +1,3 @@
-// Configuration variables
 const shuffleInterval = 8000; // Time in milliseconds between slide changes
 const listFileName = 'list.txt'; // Name of the file containing the list of movie IDs
 
@@ -52,37 +51,6 @@ function waitForElm(selector) {
     });
 }
 
-function createSlideForMovie(movie, title, index) {
-    const itemId = movie.Id;
-
-    // Create image URLs
-    const backdropUrl = `/Items/${itemId}/Images/Backdrop/0`;
-    const logoUrl = `/Items/${itemId}/Images/Logo`;
-
-    // Check if backdrop and logo images exist
-    return Promise.all([
-        fetch(backdropUrl, { method: 'HEAD' }).then(res => res.ok),
-        fetch(logoUrl, { method: 'HEAD' }).then(res => res.ok)
-    ]).then(([backdropExists, logoExists]) => {
-        if (backdropExists && logoExists) {
-            const slideElement = createSlideElement(movie, title, index);
-
-            // Add lazy loading to images
-            const backdrop = slideElement.querySelector('.backdrop');
-            const logo = slideElement.querySelector('.logo');
-
-            backdrop.setAttribute('loading', 'lazy');
-            logo.setAttribute('loading', 'lazy');
-            return waitForElm('#slides-container').then(elm => {
-                elm.appendChild(slideElement);
-            });
-
-        } else {
-            console.warn(`Skipping movie ${itemId}: Missing backdrop or logo.`);
-        }
-    });
-}
-
 function createSlideElement(movie, title, index) {
     const itemId = movie.Id;
     const plot = movie.Overview;
@@ -127,7 +95,23 @@ function createSlideElement(movie, title, index) {
     return slide;
 }
 
-let userInitiatedChange = false; // Flag to track if the change was user-initiated
+function preloadImages(movieIds) {
+    const imagePromises = movieIds.map(itemId => {
+        const backdropUrl = `/Items/${itemId}/Images/Backdrop/0`;
+        const logoUrl = `/Items/${itemId}/Images/Logo`;
+
+        // Check if both images exist
+        return Promise.all([
+            fetch(backdropUrl, { method: 'HEAD' }).then(res => res.ok),
+            fetch(logoUrl, { method: 'HEAD' }).then(res => res.ok)
+        ]).then(([backdropExists, logoExists]) => {
+            return backdropExists && logoExists ? itemId : null;
+        });
+    });
+
+    return Promise.all(imagePromises).then(results => results.filter(Boolean)); // Filter out any null values
+}
+
 let shuffleIntervalId;
 
 function initializeSlideshow() {
@@ -140,30 +124,15 @@ function initializeSlideshow() {
             slides.forEach((slide, i) => {
                 slide.style.display = i === index ? 'block' : 'none';
             });
-
-            const focusedSlide = slides[index];
-            if (userInitiatedChange) {
-                focusedSlide.focus({ focusVisible: true }); // Focus the current slide
-                clearInterval(shuffleIntervalId);
-                shuffleIntervalId = setInterval(nextSlide, shuffleInterval);
-            }
-
-            userInitiatedChange = false; // Reset the flag after updating the slide
         });
     }
 
     function nextSlide() {
-        if (document.activeElement.classList.contains('slide')) {
-            userInitiatedChange = true;
-        }
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }
 
     function prevSlide() {
-        if (document.activeElement.classList.contains('slide')) {
-            userInitiatedChange = true;
-        }
         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         showSlide(currentSlide);
     }
@@ -180,7 +149,6 @@ function initializeSlideshow() {
 
     document.addEventListener('keydown', function(event) {
         if (document.activeElement.classList.contains('slide') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
-            userInitiatedChange = true; // Set the flag for user-initiated change
             event.preventDefault();
             handleArrowKeys(event);
         }
@@ -204,14 +172,20 @@ function fetchMovies() {
         .then(text => {
             const lines = text.split('\n').filter(Boolean);
             const movieIds = shuffleArray(lines.map(line => line.substring(0, 32)));
-            return Promise.all(movieIds.map(id => fetchMovieDetails(id)));
+            return preloadImages(movieIds).then(validIds => {
+                return Promise.all(validIds.map(id => fetchMovieDetails(id)));
+            });
         })
         .then(movies => {
-            const moviePromises = movies.map((movie, index) => createSlideForMovie(movie, 'Spotlight', index));
-            return Promise.all(moviePromises);
-        })
-        .then(() => {
-            initializeSlideshow();
+            const fragment = document.createDocumentFragment(); // Use a document fragment for batch DOM updates
+            movies.forEach((movie, index) => {
+                const slide = createSlideElement(movie, 'Spotlight', index);
+                fragment.appendChild(slide);
+            });
+            return waitForElm('#slides-container').then(elm => {
+                elm.appendChild(fragment);
+                initializeSlideshow();
+            });
         })
         .catch(error => {
             console.error(error);
