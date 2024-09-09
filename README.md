@@ -91,9 +91,9 @@ find this part
 
 `data-backdroptype="movie,series,book">` and insert the following directly after the `>`
 
-`<style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto}</style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe>`
+`<script async src="/web/avatars/featuredscripts.js"></script><style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto;}</style> <style>@import url("avatars/featuredstyles.css");</style><div class="featurediframe"><div id="slides-container" class="focuscontainer-x"></div>`
 
-okay now we have injected the iframe we are %80 of the way there.
+okay now we have injected the javascript and css we are %80 of the way there.
 
 5. Okay so now we just need to edit the index.html in your webroot (/mnt/c/Program Files/Jellyfin/Server/jellyfin-web/index.html) so open it in your favorite text editor and find the following 
 
@@ -269,7 +269,8 @@ then run `sudo nano home-html.*.chunk.js`
 
 find `data-backdroptype="movie,series,book">` and insert the following directly after the `>`
 
-`<style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto}</style> <iframe class="featurediframe" src="/web/avatars/slideshow.html"></iframe>`
+`<script async src="/web/avatars/featuredscripts.js"></script><style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto;}</style> <style>@import url("avatars/featuredstyles.css");</style><div class="featurediframe"><div id="slides-container" class="focuscontainer-x"></div>`
+
 
 now save it and you should be good to go once you reload your browsers cache on the client side 
 
