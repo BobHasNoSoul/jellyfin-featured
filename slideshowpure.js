@@ -86,7 +86,7 @@ const createSlideForItem = async (item, title) => {
 };
 
 const fetchItemDetails = async (itemId) => {
-    const response = await fetch(`/Users/${userId}/Items/${itemId}`, {
+    const response = await fetch(`${window.location.origin}/Users/${userId}/Items/${itemId}`, {
         headers: {
             'Authorization': `MediaBrowser Client="Jellyfin Web", Device="YourDeviceName", DeviceId="YourDeviceId", Version="YourClientVersion", Token="${token}"`
         }
@@ -113,7 +113,7 @@ const fetchItemIdsFromList = async () => {
 
 const fetchItemsFromServer = async () => {
     try {
-        const response = await fetch(`/Users/${userId}/Items?IncludeItemTypes=Movie,Series&Recursive=true&hasOverview=true&imageTypes=Logo,Backdrop&isPlayed=False&Limit=1500`, {
+        const response = await fetch(`${window.location.origin}/Users/${userId}/Items?IncludeItemTypes=Movie,Series&Recursive=true&hasOverview=true&imageTypes=Logo,Backdrop&isPlayed=False&Limit=1500`, {
             headers: {
                 'Authorization': `MediaBrowser Client="Jellyfin Web", Device="YourDeviceName", DeviceId="YourDeviceId", Version="YourClientVersion", Token="${token}"`
             }
