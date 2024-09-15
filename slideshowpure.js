@@ -194,6 +194,9 @@ const initializeSlideshow = () => {
     if (slides.length > 0) {
         showSlide(currentSlideIndex);
 
+        // Make the slides container visible once the first slide is ready
+        container.style.display = 'block'; // Make the container visible
+
         setTimeout(() => {
             setInterval(() => {
                 // Automatically cycle through slides every shuffleInterval
@@ -272,9 +275,10 @@ const initializeSlideshow = () => {
             }
         }
 
-
+        //requestAnimationFrame(handleGamepadInput); // Continuously check for gamepad input
     };
 
+    //requestAnimationFrame(handleGamepadInput); // Start handling gamepad input
 
 };
 
