@@ -1,6 +1,10 @@
 Changlog:
+
+15/9/2024 Update3 by Bob:
+- added the element to only display when it has loaded the first slide, making it less... laggy
+
 15/9/2024 Update2 by Bob:
--fix fade bug when using xbox controller (it used to instantly fade out the next slide... very bad but now it is fixed.
+- fix fade bug when using xbox controller (it used to instantly fade out the next slide... very bad but now it is fixed.
 
 15/9/2024 Update by Bob:
 - updated the readme.md to reflect the new slideshowpure.js and slideshowpure.css changes these should be the two users use for stability
