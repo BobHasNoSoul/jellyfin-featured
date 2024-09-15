@@ -269,7 +269,7 @@ then run `sudo nano home-html.*.chunk.js`
 
 find `data-backdroptype="movie,series,book">` and insert the following directly after the `>`
 
-`<script async src="/web/avatars/featuredscripts.js"></script><style>.featurediframe { width: 89vw; height: 300px; display: block; border: 1px solid #000; margin: 0 auto;}</style> <style>@import url("avatars/featuredstyles.css");</style><div class="featurediframe"><div id="slides-container" class="focuscontainer-x"></div>`
+`<link rel="stylesheet" href="/web/avatars/slideshowpure.css"><div id="slides-container"></div><script async src="/web/avatars/slideshowpure.js"></script>`
 
 
 now save it and you should be good to go once you reload your browsers cache on the client side 
