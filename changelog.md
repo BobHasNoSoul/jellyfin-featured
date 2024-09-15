@@ -1,5 +1,8 @@
 Changlog:
 
+15/9/2024 Update4 by Bob:
+- added windows server fix, for some reason windows and its infinite wisdom doesnt like javascript that has a / for webroot or even a relative url.. who knew.. since added and updated the list.txt line on the js
+
 15/9/2024 Update3 by Bob:
 - added the element to only display when it has loaded the first slide, making it less... laggy
 
