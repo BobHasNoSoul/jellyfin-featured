@@ -183,14 +183,14 @@ const initializeSlideshow = () => {
         }
     };
 
-    // Show the first slide immediately and keep it visible for 10 seconds
+    // Show the first slide immediately and start cycling after 10 seconds
     if (slides.length > 0) {
         showSlide(currentSlideIndex);
+
         setTimeout(() => {
             setInterval(() => {
-                if (containerFocused) {
-                    updateCurrentSlide(currentSlideIndex + 1);
-                }
+                // Automatically cycle through slides every shuffleInterval
+                updateCurrentSlide(currentSlideIndex + 1);
             }, shuffleInterval);
         }, 10000); // Wait 10 seconds before starting the interval
     }
