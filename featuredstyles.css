@@ -1,132 +1,129 @@
-   /* CSS styles for the slideshow elements */
-   .slide {
-       position: relative;
-       width: 89vw;
-       height: 600px;
-       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-       cursor: pointer;
-       /* Indicates the element is clickable */
-       outline: none;
-       /* Custom focus style will be used */
-       overflow: hidden;
-       /* Ensure children don't overflow */
-   }
+/* Slide styling */
+.fade-in {
+    opacity: 1 !important;
+}
 
-   .slide:focus {
-       outline: 2px solid #fff;
-       /* Visual focus indicator */
-   }
+.fade-out {
+    opacity: 0 !important;
+}
+.slide {
+    transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
 
-   .backdrop {
-       position: absolute;
-       right: 0;
-       width: 69%;
-       /*height: calc(100% - 50px);*/
-       height: calc(100% - -50px);
-       object-fit: cover;
-       object-position: center 20%;
-       border-radius: 5px;
-       z-index: 1;
-       /* Lazy loading */
-       loading: lazy;
-   }
+/* Active slide styling */
+.slide.active {
+    opacity: 1;
+    display: block;
+}
 
-   .logo {
-       position: absolute;
-       top: 31%;
-       left: 5%;
-       transform: translateY(-50%);
-       max-height: 60%;
-       max-width: 30%;
-       width: auto;
-       z-index: 3;
-       /* Lazy loading */
-       loading: lazy;
-   }
+/* Initial styling for slides */
+#slides-container {
+    display: none;
+    position: relative;
+    width: 92vw;
+    height: 300px;
+    overflow: hidden;
+    margin: 0 auto;
+}
 
-   .featured-content {
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 50px;
-       background-color: transparent;
-       font-family: 'Noto Sans', sans-serif;
-       color: #D3D3D3;
-       font-size: 22px;
-       display: none;
-       align-items: center;
-       justify-content: flex-start;
-       z-index: 2;
-   }
 
-   .plot {
-       position: absolute;
-       bottom: 10px;
-       left: 0;
-       /* Align to the left edge */
-       /*right: 0; */
-       color: white;
-       width: 37%;
-       /* Full width */
-       font-family: 'Noto Sans', sans-serif;
-       font-size: 15px;
-       /*background: linear-gradient(to top, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 100%);*/
-       /*padding: 10px;*/
-       border-radius: 5px;
-       z-index: 4;
-       box-sizing: border-box;
-       /* Flexbox for centering text */
-       display: flex;
-       align-items: center;
-       /* Center vertically */
-       justify-content: center;
-       /* Center horizontally */
-       text-align: center;
-       /* Center text within the element */
-   }
+/* Container for slides */
+#slides-container {
+    position: relative;
+    width: 92vw;
+    height: 300px;
+    overflow: hidden;
+    margin: 0 auto;
+}
 
-   .gradient-overlay {
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 70%;
-       height: 100%;
-       background: linear-gradient(to right, rgb(0, 0, 0) 49%, rgba(0, 0, 0, 0) 70%);
-       z-index: 2;
-   }
+/* Slide focus outline */
+.slide:focus {
+    outline: 2px solid #fff;
+}
 
-   .featurediframe {
-       width: 89.3vw;
-       height: 603px;
-       margin: 0 auto;
-       align-items: center;
-   }
+/* Backdrop image styling */
+.backdrop {
+    position: absolute;
+    right: 0;
+    width: 62%;
+    height: calc(100% - -50px);
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 5px;
+    z-index: 1;
+}
 
-   @media only screen and (max-width: 767px) {
-       .plot {
-           position: absolute;
-           bottom: 1px !important;
-           left: 0;
-           /* Align to the left edge */
-           /*right: 0; */
-           color: white;
-           width: 100% !important;
-           /* Full width */
-           font-family: 'Noto Sans', sans-serif;
-           font-size: 8px !important;
-           /*background: linear-gradient(to top, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 100%);*/
-           /*padding: 10px;*/
-           border-radius: 1px;
-           z-index: 4;
-           box-sizing: border-box;
-           /* Flexbox for centering text */
-           display: flex;
-           align-items: center;
-           /* Center vertically */
-           justify-content: center;
-           /* Center horizontally */
-           text-align: center;
-           /* Center text within the element */
-       }
-   }
+/* Logo image styling */
+.logo {
+    position: absolute;
+    top: 31%;
+    left: 5%;
+    transform: translateY(-50%);
+    max-height: 60%;
+    max-width: 30%;
+    width: auto;
+    z-index: 3;
+}
+
+/* Featured content styling */
+.featured-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    font-family: 'Noto Sans', sans-serif;
+    color: #D3D3D3;
+    font-size: 22px;
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+}
+
+/* Plot text styling */
+.plot {
+    position: absolute;
+    bottom: 10px;
+    left: 25px;
+    color: white;
+    width: 37%;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 18px;
+    border-radius: 5px;
+    z-index: 4;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Gradient overlay styling */
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 79%;
+    height: 100%;
+    background: linear-gradient(to right, rgb(16, 16, 16) 49%, rgba(0, 0, 0, 0) 70%);
+    z-index: 2;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 767px) {
+    .plot {
+        bottom: 1px !important;
+        left: 0;
+        width: 100% !important;
+        font-size: 8px !important;
+        border-radius: 1px;
+    }
+}
