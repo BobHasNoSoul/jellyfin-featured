@@ -28,7 +28,7 @@ const createSlideElement = (item, title) => {
 
     const slide = document.createElement('a');
     slide.className = 'slide';
-    slide.href = `/web/#/details?id=${itemId}`;
+    slide.href = `${window.location.origin}/web/#/details?id=${itemId}`;
     slide.target = '_top';
     slide.rel = 'noreferrer';
     slide.tabIndex = 0;
@@ -36,13 +36,13 @@ const createSlideElement = (item, title) => {
 
     const backdrop = document.createElement('img');
     backdrop.className = 'backdrop';
-    backdrop.src = `/Items/${itemId}/Images/Backdrop/0`;
+    backdrop.src = `${window.location.origin}/Items/${itemId}/Images/Backdrop/0`;
     backdrop.alt = 'Backdrop';
     backdrop.loading = 'lazy';
 
     const logo = document.createElement('img');
     logo.className = 'logo';
-    logo.src = `/Items/${itemId}/Images/Logo`;
+    logo.src = `${window.location.origin}/Items/${itemId}/Images/Logo`;
     logo.alt = 'Logo';
     logo.loading = 'lazy';
 
@@ -65,8 +65,8 @@ const createSlideElement = (item, title) => {
 const createSlideForItem = async (item, title) => {
     const container = document.getElementById('slides-container');
     const itemId = item.Id;
-    const backdropUrl = `/Items/${itemId}/Images/Backdrop/0`;
-    const logoUrl = `/Items/${itemId}/Images/Logo`;
+    const backdropUrl = `${window.location.origin}/Items/${itemId}/Images/Backdrop/0`;
+    const logoUrl = `${window.location.origin}/Items/${itemId}/Images/Logo`;
 
     const [backdropExists, logoExists] = await Promise.all([
         fetch(backdropUrl, { method: 'HEAD' }).then(res => res.ok),
