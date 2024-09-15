@@ -13,34 +13,8 @@ well it makes a featured banner that changes every 10 seconds to the next item d
 - a brain
 - the ability to read this guide. (maybe also grab my avatars pack that will be updated soon too)
 
-## okay so there have been a number of updates
-
-oh no major updates (okay so since i got tagged in an issue a user was having with the alternate.html im going to rewrite it in my image.. for i am... bob)
-
-what it does now (oh no there is no need to get an api key.. or userid 
-
-if no list.txt is present the user that is currently logged in will see random items that that user has access to (so kids dont get recommended horror films that give them nightmares or your friend that doesnt understand your anime fettish doesnt get your anime library.. yes this is about someone.. you know who you are). 
-
-does it have the same format for lists.txt? No 
-
-now it goes 
-
-Title of playlist here
-itemid
-itemid
-itemid
-
-this is great for custom playlists and loads really really fast
-
-it is slower to load random lists because it does a api call and fetch (2-3 seconds on slower systems)
-
-oh also because people have items without both backdrops and logos ive taken care of that.. they will not load slides containing an item without both a backdrop and a logo.. do not open an issue about this not loading your logoless item.. it looks weird if you dont have both.. if you want that fork the repo and mod to your hearts content.. if you made it a toggle.. i would happily accept a pull request however i really cant be arsed to re theme a logo-less one and then a backdropless one.
-
-Security updates:
-because i didnt like the js being able to have plain text api key and userid.. i have rewrote it to make the user get their own automatically using javascript and having them in the sessionstorage, this wont save forever so dont worry it just gets seen by the slideshow
-
-also it no longer leaks content out like the backdrop or logos or descriptions to non logged in users, it will only work if they are using it inside of jellyfin after logging in.. so all around more secure.
-
+## Updates / Changelog:
+please see the changelog.md for accurate updates of each change.
 
 ## sudo Crontab example
 okay so this assumes you already have the lists made i reccomend using lists/halloween.txt etc as a naming standard
