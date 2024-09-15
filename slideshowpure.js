@@ -1,7 +1,8 @@
 // Configuration variables
 const shuffleInterval = 10000;
-const listFileName = '/web/avatars/list.txt';
-
+//const listFileName = '/web/avatars/list.txt';
+const listFileName = `${window.location.origin}/web/avatars/list.txt`;
+//the above line is a fix for windows.. how i hate windows
 const jsonCredentials = sessionStorage.getItem('json-credentials');
 const apiKey = sessionStorage.getItem('api-key');
 
