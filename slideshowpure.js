@@ -153,12 +153,19 @@ const createSlidesForItems = async (items) => {
 const showSlide = (index) => {
     const slides = document.querySelectorAll(".slide");
     slides.forEach((slide, i) => {
-        slide.style.display = 'none'; // Hide all slides initially
         if (i === index) {
-            slide.style.display = 'block'; // Show the active slide
+            slide.style.display = 'block'; // Ensure the slide is visible
+            // Force a reflow to apply the initial opacity before starting the fade-in
+            slide.offsetHeight; // Trigger a reflow
+            slide.style.opacity = '1'; // Fade in by setting opacity to 1
             slide.classList.add("active");
         } else {
+            slide.style.opacity = '0'; // Fade out by setting opacity to 0
             slide.classList.remove("active");
+            // Use setTimeout to wait for the opacity transition before hiding
+            setTimeout(() => {
+                slide.style.display = 'none'; // Hide after fading out
+            }, 500); // Match this timeout with your opacity transition duration
         }
     });
 };
@@ -265,10 +272,10 @@ const initializeSlideshow = () => {
             }
         }
 
-        requestAnimationFrame(handleGamepadInput); // Continuously check for gamepad input
+
     };
 
-    requestAnimationFrame(handleGamepadInput); // Start handling gamepad input
+
 };
 
 // Fetch item IDs from list.txt or from the server
