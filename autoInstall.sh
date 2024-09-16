@@ -36,19 +36,22 @@ printf '%s\n' "$nedded_functions" > init_script.js
 check_backup() {
   local file="$1"
   if [ -n "$file" ] && [ -f "$file" ]; then
-    create_backup "$file"
+    manage_backup "$file"
   else
     echo "Warning: File not found or empty path: $file"
   fi
 }
 
-create_backup() {
+manage_backup() {
   local file="$1"
   local backup="${file}.bkp"
 
   if [ ! -f "$backup" ]; then
     cp "$file" "$backup"
     echo "Backup created: $backup"
+  else
+    rm "$file"
+    cp "$backup" "$file"
   fi
 }
 
