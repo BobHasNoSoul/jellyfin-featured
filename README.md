@@ -158,97 +158,20 @@ Instructions to be added at a later date
 
 ## Linux
 
-to install on linux it is super simple 
+To install on linux it is super simple 
 
-your webroot is `/usr/share/jellyfin/web` (by default if it isnt just adjust this for your custom one you put in) 
+Your webroot is `/usr/share/jellyfin/web` (by default if it isnt just adjust this for your custom one you put in) 
 
-inside webroot make the avatars folder and then download the slideshow.html from this repo and put that inside the avatars folder inside of webroot (that should be /usr/share/jellyfin/web/avatars/slideshow.html)
+Inside webroot make the avatars folder and then download the autoInstall.sh from this repo and put that inside the avatars folder inside of webroot (that should be /usr/share/jellyfin/web/avatars/autoInstall.sh)
 
-when inside the webroot run  the following
+When inside the webroot run  the following
 
-`sudo nano index.html`
+`sudo chmod +x autoInstall.sh`
+`sudo ./autoInstall.sh`
 
-find `</body></html>`
+Now and you should be good to go once you reload your browsers cache on the client side 
 
-replace with 
-
-```
-<script>
-// Function to save credentials to sessionStorage
-function saveCredentialsToSessionStorage(credentials) {
-  try {
-    // Store the credentials in sessionStorage
-    sessionStorage.setItem('json-credentials', JSON.stringify(credentials));
-    console.log('Credentials saved to sessionStorage.');
-  } catch (error) {
-    console.error('Error saving credentials:', error);
-  }
-}
-
-// Function to save the API key to sessionStorage
-function saveApiKey(apiKey) {
-  try {
-    sessionStorage.setItem('api-key', apiKey);
-    console.log('API key saved to sessionStorage.');
-  } catch (error) {
-    console.error('Error saving API key:', error);
-  }
-}
-
-// Override the default console.log function
-(function() {
-  var originalConsoleLog = console.log;
-
-  console.log = function(message) {
-    // Call the original console.log method
-    originalConsoleLog.apply(console, arguments);
-
-    // Check if the message contains the JSON credentials
-    if (typeof message === 'string' && message.startsWith('Stored JSON credentials:')) {
-      try {
-        // Extract the JSON credentials from the message
-        var jsonString = message.substring('Stored JSON credentials: '.length);
-        var credentials = JSON.parse(jsonString);
-
-        // Save the credentials to sessionStorage
-        saveCredentialsToSessionStorage(credentials);
-      } catch (error) {
-        console.error('Error parsing credentials:', error);
-      }
-    }
-
-    // Check if the message contains the WebSocket URL with api_key
-    if (typeof message === 'string' && message.startsWith('opening web socket with url:')) {
-      try {
-        // Extract the API key from the message
-        var url = message.split('url:')[1].trim();
-        var urlParams = new URL(url).searchParams;
-        var apiKey = urlParams.get('api_key');
-
-        if (apiKey) {
-          saveApiKey(apiKey);
-        }
-      } catch (error) {
-        console.error('Error extracting API key:', error);
-      }
-    }
-  };
-})();
-</script>
-</body></html>
-
-```
-
-then run `sudo nano home-html.*.chunk.js`
-
-find `data-backdroptype="movie,series,book">` and insert the following directly after the `>`
-
-`<link rel="stylesheet" href="/web/avatars/slideshowpure.css"><div id="slides-container"></div><script async src="/web/avatars/slideshowpure.js"></script>`
-
-
-now save it and you should be good to go once you reload your browsers cache on the client side 
-
-optional make a list.txt inside /usr/share/jellyfin/web/avatars/list.txt using the following syntax
+Optional make a list.txt inside /usr/share/jellyfin/web/avatars/list.txt using the following syntax
 
 TITLE OF PLAYLIST HERE
 itemid
