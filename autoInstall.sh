@@ -33,18 +33,36 @@ printf '%s\n' "$js" > slideshowScript.js
 nedded_functions='function saveCredentialsToSessionStorage(e){try{sessionStorage.setItem("json-credentials",JSON.stringify(e)),console.log("Credentials saved to sessionStorage.")}catch(e){console.error("Error saving credentials:",e)}}function saveApiKey(e){try{sessionStorage.setItem("api-key",e),console.log("API key saved to sessionStorage.")}catch(e){console.error("Error saving API key:",e)}}!function(){var e=console.log;console.log=function(r){if(e.apply(console,arguments),"string"==typeof r&&r.startsWith("Stored JSON credentials:"))try{var s=r.substring(25);saveCredentialsToSessionStorage(JSON.parse(s))}catch(e){console.error("Error parsing credentials:",e)}if("string"==typeof r&&r.startsWith("opening web socket with url:"))try{var o=r.split("url:")[1].trim(),t=new URL(o).searchParams.get("api_key");t&&saveApiKey(t)}catch(e){console.error("Error extracting API key:",e)}}}();'
 printf '%s\n' "$nedded_functions" > init_script.js
 
-parent_dir="../"
+check_backup() {
+  local file="$1"
+  if [ -n "$file" ] && [ -f "$file" ]; then
+    create_backup "$file"
+  else
+    echo "Warning: File not found or empty path: $file"
+  fi
+}
 
-pattern="index.html"
-file=$(find "$parent_dir" -maxdepth 1 -name "$pattern" 2>/dev/null)
+create_backup() {
+  local file="$1"
+  local backup="${file}.bkp"
+
+  if [ ! -f "$backup" ]; then
+    cp "$file" "$backup"
+    echo "Backup created: $backup"
+  fi
+}
+
+parent_dir="../"
+indexHtml=$(find "$parent_dir" -maxdepth 1 -name "index.html" 2>/dev/null)
+check_backup "$indexHtml"
+
+homeHtml=$(find "$parent_dir" -maxdepth 1 -name "home-html.*.chunk.js" 2>/dev/null)
+check_backup "$homeHtml"
 
 find='</body></html>'
 replace_with='<script src="/web/avatars/init_script.js"></script></body></html>'
-sed -i "s|${find}|${replace_with}|g" "$file"
-
-pattern="home-html.*.chunk.js"
-file=$(find "$parent_dir" -maxdepth 1 -name "$pattern" 2>/dev/null)
+sed -i "s|${find}|${replace_with}|g" "$indexHtml"
 
 find='"movie,series,book">'
 replace_with='"movie,series,book"><link rel="stylesheet" href="/web/avatars/slideshowStyle.css"><div id="slides-container"></div><script async src="/web/avatars/slideshowScript.js"></script>'
-sed -i "s|${find}|${replace_with}|g" "$file"
+sed -i "s|${find}|${replace_with}|g" "$homeHtml"
