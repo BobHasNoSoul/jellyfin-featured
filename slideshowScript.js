@@ -1,8 +1,6 @@
-// Configuration variables
 const shuffleInterval = 10000;
-//const listFileName = '/web/avatars/list.txt';
 const listFileName = `${window.location.origin}/web/avatars/list.txt`;
-//the above line is a fix for windows.. how i hate windows
+
 const jsonCredentials = sessionStorage.getItem('json-credentials');
 const apiKey = sessionStorage.getItem('api-key');
 
@@ -17,10 +15,6 @@ if (jsonCredentials) {
 
 const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
-const truncateText = (element, maxLength) => {
-    let text = element.innerText;
-    if (text.length > maxLength) element.innerText = text.substring(0, maxLength) + '...';
-};
 
 const createSlideElement = (item, title) => {
     const itemId = item.Id;
@@ -32,7 +26,6 @@ const createSlideElement = (item, title) => {
     slide.target = '_top';
     slide.rel = 'noreferrer';
     slide.tabIndex = 0;
-    slide.style.display = 'none'; // Initially hide all slides
 
     const backdrop = document.createElement('img');
     backdrop.className = 'backdrop';
@@ -46,19 +39,27 @@ const createSlideElement = (item, title) => {
     logo.alt = 'Logo';
     logo.loading = 'lazy';
 
+    const logoContainer = document.createElement('div');
+    logoContainer.className = 'logo-container';
+    logoContainer.appendChild(logo);
+
     const featuredContent = document.createElement('div');
     featuredContent.className = 'featured-content';
     featuredContent.textContent = title;
 
-    const plotElement = document.createElement('div');
+    const plotElement = document.createElement('span');
     plotElement.className = 'plot';
     plotElement.textContent = plot;
-    truncateText(plotElement, 240);  // Truncate the text to fit within the plot area
+
+    const plotContainer = document.createElement('div');
+    plotContainer.className = 'plot-container';
+    plotContainer.appendChild(plotElement);
 
     const gradientOverlay = document.createElement('div');
     gradientOverlay.className = 'gradient-overlay';
 
-    slide.append(backdrop, gradientOverlay, logo, featuredContent, plotElement);
+    slide.append(gradientOverlay, backdrop, logoContainer, featuredContent, plotContainer);
+
     return slide;
 };
 
