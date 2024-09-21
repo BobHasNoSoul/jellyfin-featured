@@ -9,10 +9,13 @@ NC='\033[0m' # No Color
 
 # Getting user preferences
 read -p "$(echo -e Input, ${YELLOW}in seconds${NC}, how much time each slide should be shown --\> ) " slide_time
+slide_time=${slide_time:-10}
 slide_time=$((slide_time * 1000)) # Times 1000 to convert to milisseconds
 
 read -p "$(echo -e How many ${YELLOW}movies${NC} you want to be fetched if no list is found? --\> ) " movies_count
+movies_count=${movies_count:-15}
 read -p "$(echo -e How many ${YELLOW}series${NC} you want to be fetched if no list is found? --\> ) " series_count
+series_count=${series_count:-15}
 
 
 # The files, single lined, that will be created to be used
