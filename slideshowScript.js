@@ -187,11 +187,7 @@ const slidesInit = () => {
         const hiddenHomePage = document.querySelector('#indexPage.hide');
         if (hiddenHomePage) {
             const hiddenContainer = hiddenHomePage.querySelector('#slides-container');
-            const hiddenStyle = hiddenHomePage.querySelector('link');
-            const hideenScript = hiddenHomePage.querySelector('script');
-            hiddenContainer.remove();
-            hiddenStyle.remove();
-            hideenScript.remove();
+            hiddenContainer && hiddenContainer.remove();
         }
     
         const homePage = document.querySelector('#indexPage:not(.hide)');
@@ -223,8 +219,12 @@ const slidesInit = () => {
             // Make the slides container visible once the first slide is ready
             container.style.display = 'block'; // Make the container visible
     
+            if (typeof intervalChangeSlide !== 'undefined' && intervalChangeSlide !== null) {
+                clearInterval(intervalChangeSlide);
+            }
+
             setTimeout(() => {
-                setInterval(() => {
+                const intervalChangeSlide = setInterval(() => {
                     // Automatically cycle through slides every shuffleInterval
                     updateCurrentSlide(currentSlideIndex + 1);
                 }, shuffleInterval);
