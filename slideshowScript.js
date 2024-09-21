@@ -68,6 +68,7 @@ const slidesInit = () => {
     
     const createSlideForItem = async (item, title) => {
         const homePage = document.querySelector('#indexPage:not(.hide)');
+        if (!homePage) return;
     
         const container = homePage.querySelector('#slides-container');
         const itemId = item.Id;
@@ -161,6 +162,7 @@ const slidesInit = () => {
     
     const showSlide = (index) => {
         const homePage = document.querySelector('#indexPage:not(.hide)');
+        if (!homePage) return;
     
         const slides = homePage.querySelectorAll(".slide");
         slides.forEach((slide, i) => {
@@ -193,6 +195,7 @@ const slidesInit = () => {
         }
     
         const homePage = document.querySelector('#indexPage:not(.hide)');
+        if (!homePage) return;
     
         const slides = homePage.querySelectorAll(".slide");
         const container = homePage.querySelector('#slides-container');
