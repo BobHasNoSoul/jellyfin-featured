@@ -1,0 +1,561 @@
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+
+@media only screen and (min-width: 767px) {
+  .backdrop,
+  .slide {
+    position: absolute;
+  }
+
+  .featured-content,
+  .plot-container {
+    font-family: "Titillium Web", sans-serif;
+    left: 0;
+  }
+
+  .plot,
+  body {
+    overflow: hidden;
+  }
+
+  .dots-container {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    z-index: 2;
+    display: flex;
+    gap: 5px;
+    background-color: #ffffff3d;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 22px;
+    transition: opacity 0.5s ease-in-out;
+    scale: 0.8;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 5px;
+    background-color: #cecece;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dot.active {
+    width: 22px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 6px; /* Rounded rectangle shape */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .fade-in {
+    opacity: 1 !important;
+  }
+
+  .fade-out {
+    opacity: 0 !important;
+  }
+
+  #slides-container {
+    position: relative;
+    width: 92vw;
+    height: 650px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 15px;
+  }
+
+  .slide {
+    transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .slide.active {
+    opacity: 1;
+    display: block;
+  }
+
+  .slide:focus {
+    outline: #fff solid 2px;
+  }
+
+  .backdrop-container {
+    position: relative;
+    top: -40%;
+    right: -35%;
+    width: 70%;
+    height: 100%;
+  }
+
+  .backdrop {
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: 5px;
+    z-index: 1;
+  }
+
+  .backdrop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Adjust the alpha for dimness */
+    border-radius: 5px;
+    z-index: 2;
+  }
+
+  .logo-container {
+    width: 35%;
+    height: 40%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo {
+    max-height: 80%;
+    max-width: 80%;
+    width: auto;
+    z-index: 3;
+  }
+
+  .featured-content {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    color: #d3d3d3;
+    font-size: 22px;
+    display: none;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 2;
+  }
+
+  .plot-container {
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    width: 33%;
+    height: 60%;
+    font-size: 15px;
+    padding: 10px 0 25px 15px;
+    border-radius: 5px;
+    z-index: 4;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+  }
+
+  .plot {
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    left: 2.5em;
+    position: absolute;
+    bottom: 30px;
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(to right, #000 49%, rgba(0, 0, 0, 0) 70%);
+    z-index: 2;
+  }
+  .genre {
+    position: absolute;
+    top: calc(50% + 50px);
+    left: 2.6em;
+    text-align: center;
+    color: #fff;
+    font-family: "Titillium Web", sans-serif;
+    font-size: 14px;
+    z-index: 4;
+  }
+  .info-container {
+    position: absolute;
+    top: calc(50% + 0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 2em !important;
+    color: #fff;
+    z-index: 4;
+  }
+  .rating-value {
+    font-family: "Titillium Web", sans-serif;
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+    margin-right: -3px;
+    z-index: 5;
+    position: relative;
+  }
+  .runTime {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+    margin-right: -3px;
+  }
+  .rating-value img {
+    margin-right: 6px;
+  }
+  .tomato-rating {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+  }
+  .tomato-rating img {
+    margin-left: 5px;
+  }
+  .age-rating {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    background: rgb(255 255 255 / 0.8);
+    color: #000;
+    border: none;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 0 0.6em;
+  }
+  .date {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    margin-left: 2px;
+  }
+  .separator-icon {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 10px;
+    color: aquamarine;
+  }
+  .play-button {
+    position: absolute;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Keep content aligned horizontally */
+    padding: 10px 20px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 50px; /* Round the edges */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 300;
+    transition: background-color 0.3s;
+    z-index: 4;
+    top: calc(50% + 125px);
+    left: 1em;
+  }
+
+  .play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px; /* Adjust the size of the play icon */
+    width: 50px; /* Ensure the icon area is circular */
+    height: 50px;
+    background-color: rgba(
+      12,
+      110,
+      162,
+      0.7
+    ); /* Same as the button's background */
+    border: 3px solid rgba(12, 110, 162, 1);
+    border-radius: 50%; /* Make the icon a perfect circle */
+  }
+  .play-button i {
+    margin-left: 4px;
+  }
+
+  .play-text {
+    font-family: "Titillium Web", sans-serif;
+    margin-left: 10px; /* Space between icon and text */
+    font-size: 14px;
+    color: #fff;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .backdrop,
+  .slide {
+    position: absolute;
+  }
+
+  .featured-content,
+  .plot-container {
+    font-family: "Titillium Web", sans-serif;
+    left: 0;
+  }
+
+  .plot,
+  body {
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .fade-in {
+    opacity: 1 !important;
+  }
+
+  .fade-out {
+    opacity: 0 !important;
+  }
+
+  .dots-container {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.6);
+    z-index: 2;
+    display: flex;
+    gap: 5px;
+    background-color: #ffffff3d;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    width: 140px;
+    height: 22px;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin: 0 5px;
+    background-color: #cecece;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dot.active {
+    width: 22px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 6px; /* Rounded rectangle shape */
+  }
+
+  #slides-container {
+    position: relative;
+    width: 92vw;
+    height: 650px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 15px;
+  }
+
+  .slide {
+    transition: opacity 0.5s ease-in-out; /* Smooth fade transition */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .slide.active {
+    opacity: 1;
+    display: block;
+  }
+
+  .slide:focus {
+    outline: #fff solid 2px;
+  }
+  .logo {
+    position: absolute;
+    bottom: 28%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 60%;
+    max-width: 80%;
+    width: auto;
+    z-index: 3;
+  }
+  .backdrop {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+    object-fit: cover;
+    object-position: center 20%;
+    z-index: 1;
+    border-radius: 13px;
+  }
+  .gradient-overlay {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+    background-color: rgb(0 0 0 / 0.75);
+    z-index: 2;
+    border-radius: 12px;
+  }
+  .genre {
+    position: absolute;
+    bottom: 14.5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #fff;
+    width: 90%;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Titillium Web", sans-serif;
+    font-size: 1.1em;
+    font-weight: 500;
+    z-index: 4;
+    box-sizing: border-box;
+  }
+  .info-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1em;
+    color: #fff;
+    z-index: 5;
+    width: 100%;
+  }
+  .rating-value {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  .date {
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-left: 2px;
+  }
+  .tomato-rating {
+    display: flex;
+    align-items: center;
+  }
+  .tomato-logo {
+    margin-right: 3px;
+  }
+  .critic-logo {
+    margin-left: 3px;
+  }
+  .imdb-logo {
+    margin-right: 3px;
+  }
+  .age-rating {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    background: rgb(255 255 255 / 0.8);
+    color: #000;
+    border: none;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 0 0.4em;
+  }
+  .separator-icon {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 1px;
+    color: aquamarine;
+  }
+  .featured-content,
+  .plot {
+    display: none;
+  }
+
+  .play-button {
+    position: absolute;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: flex-start; /* Keep content aligned horizontally */
+    padding: 10px 20px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-radius: 50px; /* Round the edges */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 300;
+    transition: background-color 0.3s;
+    z-index: 4;
+    top: 40.5em;
+    right: 0%;
+    outline: none; /* Remove the default blue focus outline */
+    -webkit-tap-highlight-color: transparent; /* Disable blue tap highlight */
+  }
+
+  .play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px; /* Adjust the size of the play icon */
+    width: 45px; /* Ensure the icon area is circular */
+    height: 45px;
+    background-color: rgba(
+      12,
+      110,
+      162,
+      0.7
+    ); /* Same as the button's background */
+    border: 3px solid rgba(12, 110, 162, 1);
+    border-radius: 50%; /* Make the icon a perfect circle */
+    outline: none; /* Remove the default blue focus outline */
+    -webkit-tap-highlight-color: transparent; /* Disable blue tap highlight */
+  }
+
+  .play-text {
+    display: none;
+  }
+  .play-button i {
+    margin-left: 2px;
+  }
+}
