@@ -154,7 +154,7 @@ once you have found that file and made a backup of it add
 
 ```
 
-<script>(function() { const hasReloaded = sessionStorage.getItem("has-reloaded"); if (!hasReloaded) { setTimeout(function() { window.location.reload(); sessionStorage.setItem("has-reloaded", "true"); }, 1500); } })();</script>
+<script>const script=document.createElement("script");script.src="/web/avatars/slideshowpure.js?t=" + new Date().getTime();script.defer=true;document.head.appendChild(script);</script><<script>(function() { const hasReloaded = sessionStorage.getItem("has-reloaded"); if (!hasReloaded) { setTimeout(function() { window.location.reload(); sessionStorage.setItem("has-reloaded", "true"); }, 1500); } })();</script>
 
 ```
 
